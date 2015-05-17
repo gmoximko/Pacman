@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerController : Mover {
 	private int vertical = 0;
 	private int horizontal = 0;
+	private int x = 0;
+	private int y = 0;
 
 	protected override void Start () {
 		base.Start();
@@ -27,7 +29,12 @@ public class PlayerController : Mover {
 		}
 
 		if ((vertical != 0 || horizontal != 0) && canMove) {
-			move (horizontal, vertical);
+			if (!move (horizontal, vertical)) {
+				move(x, y); //don't change direction if path is locked 
+			} else {
+				x = horizontal;
+				y = vertical;
+			}
 		}
 	}
 }
