@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-	private int rows = 28;
-	private int columns = 31;
+	private const int rows = 28;
+	private const int columns = 31;
 	private List<Vector2> foods;
 
 	public LayerMask mask;
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		foods = new List<Vector2> (240);
-		initGame ();
+		//initGame ();
 	}
 
 	private void initGame() {
