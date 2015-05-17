@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class PlayerController : Mover {
-	public float speed;
 	
 	protected override void Start () {
 		base.Start();
+		canMove = true;
 	}
 
 	void Update () {
@@ -16,7 +16,7 @@ public class PlayerController : Mover {
 			horizontal = 0;
 		}
 
-		if (vertical != 0 || horizontal != 0) {
+		if ((vertical != 0 || horizontal != 0) && canMove) {
 			Debug.Log(move (horizontal, vertical));
 		}
 	}
