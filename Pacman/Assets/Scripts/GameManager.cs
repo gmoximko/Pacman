@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		foods = new List<Vector2> (240);
-		//initGame ();
+		initGame ();
 	}
 
 	private void initGame() {
@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour {
 		int vertical;
 		int horizontal;
 		bool visit;
-		RaycastHit2D hit;
 		Stack<Vector2> queue = new Stack<Vector2> ();
 		Vector2 insert = new Vector2 (i, j);
 
@@ -71,10 +70,14 @@ public class GameManager : MonoBehaviour {
 	                    ref Stack<Vector2> queue, 
 	                    ref Vector2 temp, 
 	                    ref Vector2 insert) {
+		if (insert.x > 30 || insert.x < 0 || insert.y > 30 || insert.y < 0) {
+			return;
+		}
+
 		if (Physics2D.Linecast(temp, insert, mask).transform == null) {
 			if (!visit) {
 				visit = true;
-				if ((temp - insert).x > 0)
+				if (     (temp - insert).x > 0)
 					horizontal++;
 				else if ((temp - insert).x < 0)
 					horizontal--;
