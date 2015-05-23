@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour {
 
 				i += horizontal;
 				j += vertical;
+				Debug.Log("Step: " + foods.Count + " Horizontal: " + i + " Vertical: " + j);
 				temp = new Vector2(i , j);
 			} while (visit);
 		}
@@ -71,11 +72,7 @@ public class GameManager : MonoBehaviour {
 	                     ref Stack<Vector2> queue, 
 	                     Vector2 temp, 
 	                     Vector2 insert) {
-		if (   (insert.x > columns - 1) 
-		    || (insert.x < 0) 
-		    || (insert.y > rows - 1) 
-		    || (insert.y < 0)
-		    || foods.Contains(insert)) {
+		if (!canFoodStay(insert)) {
 			return;
 		}
 
@@ -92,5 +89,27 @@ public class GameManager : MonoBehaviour {
 				queue.Push(insert);
 			}
 		} 
+	}
+
+	private bool canFoodStay(Vector2 insert) {
+
+		if ((insert.x > columns - 1) 
+			|| (insert.x < 0) 
+			|| (insert.y > rows - 1) 
+			|| (insert.y < 0)
+			|| (insert.y > 10 && insert.y < 22 && insert.x != 6 && insert.x != 21)
+			|| ((insert.x == 14 || insert.x == 13) && insert.y == 7)
+		    || foods.Contains(insert)) {
+			return false;
+		}
+
+		foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Energizer")) {
+			Transform energizer = temp.GetComponent<Transform>();
+
+			if (insert.x == energizer.position.x && insert.y == energizer.position.y) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
