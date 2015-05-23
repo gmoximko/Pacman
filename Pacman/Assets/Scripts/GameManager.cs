@@ -20,31 +20,31 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		foods = new List<Vector2> (foodCount);
-		//initGame ();
+		foodGo ();
 	}
 
-	private void initGame() {
+	private void foodGo() {
 		int i = 1;
 		int j = 1;
+		Stack<Vector2> queue = new Stack<Vector2> ();
+		Vector2 insert = new Vector2 (i, j);
 		int vertical;
 		int horizontal;
 		bool visit;
-		Stack<Vector2> queue = new Stack<Vector2> ();
-		Vector2 insert = new Vector2 (i, j);
-		queue.Push (insert);
-		foods.Add (insert);
-		Instantiate(food, insert, Quaternion.identity);
+		Vector2 temp;
 
-		//while (queue.Count > 0) {
-			Vector2 temp = queue.Pop();
+		queue.Push (insert);
+	
+		while (queue.Count > 0) {
+			temp = queue.Pop();
 			i = (int)temp.x;
 			j = (int)temp.y;
-		int exit = 0;
+
 			do {
 				visit = false;
-				vertical = 0;
 				horizontal = 0;
-			exit++;
+				vertical = 0;
+
 				insert = new Vector2(i + 1, j);
 				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
 
@@ -56,11 +56,13 @@ public class GameManager : MonoBehaviour {
 
 				insert = new Vector2(i, j - 1);
 				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
-			Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
+
 				i += horizontal;
 				j += vertical;
-			} while (exit < 10);
-			//}
+				temp = new Vector2(i , j);
+			} while (visit);
+		}
+		Debug.Log (foods.Count);
 	}
 
 	private void setFood(ref bool visit, 
@@ -80,19 +82,14 @@ public class GameManager : MonoBehaviour {
 		if (Physics2D.Linecast(temp, insert, mask).transform == null) {
 			if (!visit) {
 				visit = true;
-				if (     (temp - insert).x > 0)
-					horizontal++;
-				else if ((temp - insert).x < 0)
-					horizontal--;
-				else if ((temp - insert).y > 0)
-					vertical++;
-				else if ((temp - insert).y < 0)
-					vertical--;
+				if (     (temp - insert).x < 0) horizontal++;
+				else if ((temp - insert).x > 0) horizontal--;
+				else if ((temp - insert).y < 0) vertical++;
+				else if ((temp - insert).y > 0) vertical--;
 				Instantiate(food, insert, Quaternion.identity);
 				foods.Add(insert);
 			} else {
 				queue.Push(insert);
-				Debug.Log("I'M HERE");
 			}
 		} 
 	}
