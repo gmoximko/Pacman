@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-	private const int rows = 28;
-	private const int columns = 31;
+	private const int rows = 31;
+	private const int columns = 28;
+	private const int foodCount = 240;
 	private List<Vector2> foods;
 
 	public LayerMask mask;
 	public GameObject food;
 	public static GameManager gameManager = null;
-
-
+	
 	void Start () {
 
 		if (gameManager == null) {
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		DontDestroyOnLoad (gameObject);
-		foods = new List<Vector2> (240);
+		foods = new List<Vector2> (foodCount);
 		//initGame ();
 	}
 
@@ -31,46 +31,49 @@ public class GameManager : MonoBehaviour {
 		bool visit;
 		Stack<Vector2> queue = new Stack<Vector2> ();
 		Vector2 insert = new Vector2 (i, j);
-
 		queue.Push (insert);
 		foods.Add (insert);
 		Instantiate(food, insert, Quaternion.identity);
 
-		while (queue.Count > 0) {
+		//while (queue.Count > 0) {
 			Vector2 temp = queue.Pop();
 			i = (int)temp.x;
 			j = (int)temp.y;
-
+		int exit = 0;
 			do {
 				visit = false;
 				vertical = 0;
 				horizontal = 0;
-
+			exit++;
 				insert = new Vector2(i + 1, j);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, ref temp, ref insert);
+				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
 
 				insert = new Vector2(i - 1, j);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, ref temp, ref insert);
+				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
 
 				insert = new Vector2(i, j + 1);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, ref temp, ref insert);
+				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
 
 				insert = new Vector2(i, j - 1);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, ref temp, ref insert);
-
+				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
+			Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
 				i += horizontal;
 				j += vertical;
-			} while (!foods.Contains(new Vector2(i, j)));
-		}
+			} while (exit < 10);
+			//}
 	}
 
 	private void setFood(ref bool visit, 
-	                    ref int horizontal, 
-	                    ref int vertical, 
-	                    ref Stack<Vector2> queue, 
-	                    ref Vector2 temp, 
-	                    ref Vector2 insert) {
-		if (insert.x > 30 || insert.x < 0 || insert.y > 30 || insert.y < 0) {
+	                     ref int horizontal, 
+	                     ref int vertical, 
+	                     ref Stack<Vector2> queue, 
+	                     Vector2 temp, 
+	                     Vector2 insert) {
+		if (   (insert.x > columns - 1) 
+		    || (insert.x < 0) 
+		    || (insert.y > rows - 1) 
+		    || (insert.y < 0)
+		    || foods.Contains(insert)) {
 			return;
 		}
 
@@ -85,11 +88,12 @@ public class GameManager : MonoBehaviour {
 					vertical++;
 				else if ((temp - insert).y < 0)
 					vertical--;
+				Instantiate(food, insert, Quaternion.identity);
+				foods.Add(insert);
 			} else {
 				queue.Push(insert);
+				Debug.Log("I'M HERE");
 			}
-			Instantiate(food, insert, Quaternion.identity);
-			foods.Add(insert);
 		} 
 	}
 }
