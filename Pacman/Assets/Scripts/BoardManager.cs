@@ -5,10 +5,10 @@ public class BoardManager : MonoBehaviour {
 	private const int rows = 31;
 	private const int columns = 28;
 	private readonly Vector2 pacmanPos = new Vector2 (14, 7);
-	private readonly Vector2[] energizers = {new Vector2 (1, 7), 
-											 new Vector2 (26, 7), 
+	private readonly Vector2[] energizers = {new Vector2 ( 1,  7), 
+											 new Vector2 (26,  7), 
 											 new Vector2 (26, 27), 
-											 new Vector2 (1, 27)};
+											 new Vector2 ( 1, 27)};
 
 	public LayerMask mask;
 	public GameObject food;
@@ -33,8 +33,8 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	private void foodGo() {
-		int i = 1;
-		int j = 1;
+		int i = 1; 
+		int j = 1; //обход делаем начиная с первой клеточки лабиринта
 		Stack<Vector2> queue = new Stack<Vector2> ();
 		Vector2 insert = new Vector2 (i, j);
 		int vertical;
@@ -111,8 +111,8 @@ public class BoardManager : MonoBehaviour {
 		    || (insert.x < 0) 
 		    || (insert.y > rows - 1) 
 		    || (insert.y < 0)
-		    || (insert.y > 10 && insert.y < 22 && insert.x != 6 && insert.x != 21)
-		    || ((insert.x == 14 || insert.x == 13) && insert.y == 7)
+		    || (insert.y > 10 && insert.y < 22 && insert.x != 6 && insert.x != 21) //позиции где не должна быть еда
+		    || ((insert.x == 14 || insert.x == 13) && insert.y == 7)               //позиция пакмана
 		    || GameManager.gameManager.foods.Contains(insert)) {
 			return false;
 		}

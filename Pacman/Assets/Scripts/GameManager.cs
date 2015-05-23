@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
 		if (gameManager == null) {
 			gameManager = this;
-			gameStart += boardManager.setLevel;
+			GameManager.gameManager.gameStart += boardManager.setLevel;
 		} else if (gameManager != this) {
 			Destroy(gameObject);
 		}
