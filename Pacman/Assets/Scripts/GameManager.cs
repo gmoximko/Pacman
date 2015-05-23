@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour {
 			i = (int)temp.x;
 			j = (int)temp.y;
 
+			if (!foods.Contains(temp)) {
+				Instantiate(food, temp, Quaternion.identity);
+				foods.Add(temp);
+			}
+
 			do {
 				visit = false;
 				horizontal = 0;
@@ -59,8 +64,8 @@ public class GameManager : MonoBehaviour {
 
 				i += horizontal;
 				j += vertical;
-				Debug.Log("Step: " + foods.Count + " Horizontal: " + i + " Vertical: " + j);
-				temp = new Vector2(i , j);
+
+				temp = new Vector2(i, j);
 			} while (visit);
 		}
 		Debug.Log (foods.Count);
