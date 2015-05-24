@@ -44,6 +44,12 @@ public abstract class Mover : MonoBehaviour {
 			sqrDistance = ((Vector2)transform.position - direction).sqrMagnitude;
 			yield return null;
 		}
+
+		if (body.position.x < 0) {
+			body.MovePosition(new Vector2(27, body.position.y));
+		} else if (body.position.x > 27) {
+			body.MovePosition(new Vector2( 0, body.position.y));
+		}
 		canMove = true;
 	}
 
