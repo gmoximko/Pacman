@@ -5,6 +5,8 @@ public abstract class Mover : MonoBehaviour {
 	private Rigidbody2D body;
 	private Collider2D coll;
 	private Animator anim;
+	private readonly Vector2 rightTunnel = new Vector2 (27, 16);
+	private readonly Vector2 leftTunnel  = new Vector2 (0, 16);
 
 	protected bool canMove;
 
@@ -45,10 +47,10 @@ public abstract class Mover : MonoBehaviour {
 			yield return null;
 		}
 
-		if (body.position.x < 0) {
-			body.MovePosition(new Vector2(27, body.position.y));
-		} else if (body.position.x > 27) {
-			body.MovePosition(new Vector2( 0, body.position.y));
+		if (body.position.x < leftTunnel.x) {
+			body.MovePosition(rightTunnel);
+		} else if (body.position.x >rightTunnel.x) {
+			body.MovePosition(leftTunnel);
 		}
 		canMove = true;
 	}
