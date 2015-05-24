@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour {
 
 		if (gameManager == null) {
 			gameManager = this;
-			GameManager.gameManager.gameStart += boardManager.setLevel;
 		} else if (gameManager != this) {
 			Destroy(gameObject);
 		}
+		GameManager.gameManager.gameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		foods = new List<Vector2> (foodCount);
 		gameStart ();
