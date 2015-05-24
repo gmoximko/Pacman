@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 	public BoardManager boardManager;
 	public static GameManager gameManager = null;
 	
-	void Start () {
+	void Awake () {
 
 		if (gameManager == null) {
 			gameManager = this;
@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		foods = new List<Vector2> (foodCount);
+		gameStart ();
+	}
+
+	public void Restart() {
+		Application.LoadLevel (Application.loadedLevel);
+	}
+
+	void OnLevelWasLoaded() {
 		gameStart ();
 	}
 }
