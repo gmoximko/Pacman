@@ -9,7 +9,6 @@ public class PlayerController : Mover {
 
 	protected override void Start () {
 		base.Start();
-		canMove = true;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -42,7 +41,7 @@ public class PlayerController : Mover {
 			horizontal = 0;
 		}
 
-		if ((vertical != 0 || horizontal != 0) && canMove) {
+		if ((vertical != 0 || horizontal != 0)) {
 			if (!move (horizontal, vertical)) {
 				move(x, y); //don't change direction if path is locked 
 			} else {

@@ -5,10 +5,9 @@ public abstract class Mover : MonoBehaviour {
 	private Rigidbody2D body;
 	private Collider2D coll;
 	private Animator anim;
+	private bool canMove;
 	private readonly Vector2 rightTunnel = new Vector2 (27, 16);
 	private readonly Vector2 leftTunnel  = new Vector2 (0, 16);
-
-	protected bool canMove;
 
 	public float speed;
 	public LayerMask mask;
@@ -17,9 +16,14 @@ public abstract class Mover : MonoBehaviour {
 		body = GetComponent<Rigidbody2D> ();
 		coll = GetComponent<Collider2D> ();
 		anim = GetComponent<Animator> ();
+		canMove = true;
 	}
 
 	protected bool move(int x, int y) {
+
+		if (!canMove) {
+			return false;
+		}
 		Vector2 start = (Vector2)transform.position;
 		Vector2 end = new Vector2 (x, y) + start;
 		RaycastHit2D hit;

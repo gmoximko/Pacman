@@ -60,16 +60,16 @@ public class BoardManager : MonoBehaviour {
 				vertical = 0;
 				
 				insert = new Vector2(i + 1, j);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
+				setFood(ref visit, ref horizontal, ref vertical, queue, temp, insert);
 				
 				insert = new Vector2(i - 1, j);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
+				setFood(ref visit, ref horizontal, ref vertical, queue, temp, insert);
 				
 				insert = new Vector2(i, j + 1);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
+				setFood(ref visit, ref horizontal, ref vertical, queue, temp, insert);
 				
 				insert = new Vector2(i, j - 1);
-				setFood(ref visit, ref horizontal, ref vertical, ref queue, temp, insert);
+				setFood(ref visit, ref horizontal, ref vertical, queue, temp, insert);
 				
 				i += horizontal;
 				j += vertical;
@@ -83,7 +83,7 @@ public class BoardManager : MonoBehaviour {
 	private void setFood(ref bool visit, 
 	                     ref int horizontal, 
 	                     ref int vertical, 
-	                     ref Stack<Vector2> queue, 
+	                     Stack<Vector2> queue, 
 	                     Vector2 temp, 
 	                     Vector2 insert) {
 		if (!canFoodStay(insert)) {
