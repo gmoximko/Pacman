@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GhostController : Mover {
+public class Akabei : Mover {
+	private GameObject pacman;
+	private bool isMove = true;
+
 	protected int target_x;
 	protected int target_y;
-	private GameObject pacman;
-
+	
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
@@ -17,11 +19,17 @@ public class GhostController : Mover {
 	}
 
 	private void searchPath(int x, int y) {
-		
+		int start_x = (int)transform.position.x;
+		int start_y = (int)transform.position.y;
+
+		isMove = move (x, y);
 	}
 
 	void Update() {
-		setPoint ();
-		searchPath (target_x, target_y);
+
+		if (isMove) {
+			setPoint ();
+			searchPath (target_x, target_y);
+		}
 	}
 }
