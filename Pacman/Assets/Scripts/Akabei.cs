@@ -4,8 +4,11 @@ using System.Collections;
 public class Akabei : Mover {
 	private GameObject pacman;
 	private bool isMove = true;
+	private readonly Vector2[] directions = { new Vector2 (-1.0f, 0.0f), 
+										      new Vector2 ( 1.0f, 0.0f),
+											  new Vector2 ( 0.0f,-1.0f),
+											  new Vector2 ( 0.0f, 1.0f) };
 
-	protected Vector2 left = new Vector2 (-1.0f, 0.0f);
 	protected int target_x;
 	protected int target_y;
 	
@@ -22,6 +25,8 @@ public class Akabei : Mover {
 	private void searchPath(int x, int y) {
 		int start_x = (int)transform.position.x;
 		int start_y = (int)transform.position.y;
+
+
 
 		isMove = move (x, y);
 	}

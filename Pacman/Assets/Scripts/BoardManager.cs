@@ -6,10 +6,10 @@ public class BoardManager : MonoBehaviour {
 	private const int columns = 28;
 	private List<Vector2> foods;
 	private readonly Vector2 pacmanPos = new Vector2 (14.0f, 7.0f);
-	private readonly Vector2[] energizers = {new Vector2 ( 1.0f,  7.0f), 
-											 new Vector2 (26.0f,  7.0f), 
-											 new Vector2 (26.0f, 27.0f), 
-											 new Vector2 ( 1.0f, 27.0f)};
+	private readonly Vector2[] energizers = { new Vector2 ( 1.0f,  7.0f), 
+											  new Vector2 (26.0f,  7.0f), 
+											  new Vector2 (26.0f, 27.0f), 
+											  new Vector2 ( 1.0f, 27.0f) };
 
 	public LayerMask mask;
 	public GameObject food;
