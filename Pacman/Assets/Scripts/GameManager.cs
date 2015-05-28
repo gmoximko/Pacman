@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void Restart() {
-		//foods = new List<Vector2> (foodCount); //?
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
