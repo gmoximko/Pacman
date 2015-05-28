@@ -5,6 +5,7 @@ public class Akabei : Mover {
 	private GameObject pacman;
 	private bool isMove = true;
 
+	protected Vector2 left = new Vector2 (-1.0f, 0.0f);
 	protected int target_x;
 	protected int target_y;
 	

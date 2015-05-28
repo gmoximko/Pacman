@@ -6,6 +6,7 @@ public class PlayerController : Mover {
 	private int horizontal = 0;
 	private int x = -1; //default direction is left
 	private int y = 0;
+	private int foodEaten = 0;
 
 	protected override void Start () {
 		base.Start();
@@ -14,9 +15,9 @@ public class PlayerController : Mover {
 	void OnTriggerEnter2D(Collider2D other) {
 
 		if (other.tag == "Food") {
-			GameManager.gameManager.foods.RemoveAt(0);
+			foodEaten++;
 
-			if (GameManager.gameManager.foods.Count == 0) {
+			if (GameManager.foodCount == foodEaten) {
 				GameManager.gameManager.Restart();
 			}
 		} else if (other.tag == "Energizer") {

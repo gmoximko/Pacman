@@ -6,8 +6,8 @@ public abstract class Mover : MonoBehaviour {
 	private Collider2D coll;
 	private Animator anim;
 	private bool canMove = true;
-	private readonly Vector2 rightTunnel = new Vector2 (27, 16);
-	private readonly Vector2 leftTunnel  = new Vector2 (0, 16);
+	private readonly Vector2 rightTunnel = new Vector2 (27.0f, 16.0f);
+	private readonly Vector2 leftTunnel  = new Vector2 (0.0f, 16.0f);
 
 	public float speed;
 	public LayerMask mask;
@@ -61,13 +61,13 @@ public abstract class Mover : MonoBehaviour {
 	private void setAnimation(Vector2 end) {
 		Vector2 startPos = (Vector2)transform.position;
 
-		if (startPos.x - end.x > 0) {
+		if (startPos.x - end.x > 0.0f) {
 			anim.SetTrigger ("Left");
-		} else if (startPos.x - end.x < 0) {
+		} else if (startPos.x - end.x < 0.0f) {
 			anim.SetTrigger ("Right");
-		} else if (startPos.y - end.y > 0) {
+		} else if (startPos.y - end.y > 0.0f) {
 			anim.SetTrigger ("Down");
-		} else if (startPos.y - end.y < 0) {
+		} else if (startPos.y - end.y < 0.0f) {
 			anim.SetTrigger ("Up");
 		}
 	}

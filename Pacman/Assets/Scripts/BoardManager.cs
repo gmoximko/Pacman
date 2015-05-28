@@ -4,11 +4,12 @@ using System.Collections.Generic;
 public class BoardManager : MonoBehaviour {
 	private const int rows = 31;
 	private const int columns = 28;
-	private readonly Vector2 pacmanPos = new Vector2 (14, 7);
-	private readonly Vector2[] energizers = {new Vector2 ( 1,  7), 
-											 new Vector2 (26,  7), 
-											 new Vector2 (26, 27), 
-											 new Vector2 ( 1, 27)};
+	private List<Vector2> foods;
+	private readonly Vector2 pacmanPos = new Vector2 (14.0f, 7.0f);
+	private readonly Vector2[] energizers = {new Vector2 ( 1.0f,  7.0f), 
+											 new Vector2 (26.0f,  7.0f), 
+											 new Vector2 (26.0f, 27.0f), 
+											 new Vector2 ( 1.0f, 27.0f)};
 
 	public LayerMask mask;
 	public GameObject food;
@@ -33,6 +34,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	private void foodGo() {
+		foods = new List<Vector2> (GameManager.foodCount); //?
 		int i = 1; 
 		int j = 1; //обход делаем начиная с первой клеточки лабиринта
 		Stack<Vector2> queue = new Stack<Vector2> ();
@@ -49,9 +51,9 @@ public class BoardManager : MonoBehaviour {
 			i = (int)temp.x;
 			j = (int)temp.y;
 			
-			if (!GameManager.gameManager.foods.Contains(temp)) {
+			if (!foods.Contains(temp)) {
 				Instantiate(food, temp, Quaternion.identity);
-				GameManager.gameManager.foods.Add(temp);
+				foods.Add(temp);
 			}
 			
 			do {
@@ -77,7 +79,7 @@ public class BoardManager : MonoBehaviour {
 				temp = new Vector2(i, j);
 			} while (visit);
 		}
-		Debug.Log (GameManager.gameManager.foods.Count);
+		Debug.Log (foods.Count);
 	}
 	
 	private void setFood(ref bool visit, 
@@ -93,12 +95,12 @@ public class BoardManager : MonoBehaviour {
 		if (Physics2D.Linecast(temp, insert, mask).transform == null) {
 			if (!visit) {
 				visit = true;
-				if (     (temp - insert).x < 0) horizontal++;
-				else if ((temp - insert).x > 0) horizontal--;
-				else if ((temp - insert).y < 0) vertical++;
-				else if ((temp - insert).y > 0) vertical--;
+				if (     (temp - insert).x < 0.0f) horizontal++;
+				else if ((temp - insert).x > 0.0f) horizontal--;
+				else if ((temp - insert).y < 0.0f) vertical++;
+				else if ((temp - insert).y > 0.0f) vertical--;
 				Instantiate(food, insert, Quaternion.identity);
-				GameManager.gameManager.foods.Add(insert);
+				foods.Add(insert);
 			} else {
 				queue.Push(insert);
 			}
@@ -107,13 +109,13 @@ public class BoardManager : MonoBehaviour {
 	
 	private bool canFoodStay(Vector2 insert) {
 		
-		if ((insert.x > columns - 1) 
-		    || (insert.x < 0) 
-		    || (insert.y > rows - 1) 
-		    || (insert.y < 0)
-		    || (insert.y > 10 && insert.y < 22 && insert.x != 6 && insert.x != 21) //позиции где не должна быть еда
-		    || ((insert.x == 14 || insert.x == 13) && insert.y == 7)               //позиция пакмана
-		    || GameManager.gameManager.foods.Contains(insert)) {
+		if ((insert.x > columns - 1.0f) 
+		    || (insert.x < 0.0f) 
+		    || (insert.y > rows - 1.0f) 
+		    || (insert.y < 0.0f)
+		    || (insert.y > 10.0f && insert.y < 22.0f && insert.x != 6.0f && insert.x != 21.0f) //позиции где не должна быть еда
+		    || ((insert.x == 14.0f || insert.x == 13.0f) && insert.y == 7.0f)               //позиция пакмана
+		    || foods.Contains(insert)) {
 			return false;
 		}
 		
