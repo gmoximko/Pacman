@@ -10,16 +10,19 @@ public class BoardManager : MonoBehaviour {
 											  new Vector2 (26.0f,  7.0f), 
 											  new Vector2 (26.0f, 27.0f), 
 											  new Vector2 ( 1.0f, 27.0f) };
+	private readonly Vector2[] ghosts = { new Vector2 (14, 19) };
 
 	public LayerMask mask;
 	public GameObject food;
 	public GameObject energizer;
 	public GameObject pacman;
+	public GameObject Akabei;
 
 	public void setLevel() {
 		pacmanGo ();
 		energizerGo ();
 		foodGo ();
+		Instantiate (Akabei, ghosts [0], Quaternion.identity);
 	}
 
 	private void pacmanGo() {
