@@ -39,12 +39,15 @@ public class Akabei : Mover {
 					chooseDir = temp;
 					minDistance = currentDistance;
 				} else if (minDistance == currentDistance) {
-					if      (temp == directions[3]) chooseDir = temp;
+					if      (temp == directions[3]) 
+						chooseDir = temp;
 					else if (temp == directions[0] 
-					         && chooseDir != directions[3]) chooseDir = temp;
+					         && chooseDir != directions[3]) 
+						chooseDir = temp;
 					else if (temp == directions[2] 
 					         && chooseDir != directions[3] 
-					         && chooseDir != directions[0]) chooseDir = temp;
+					         && chooseDir != directions[0]) 
+						chooseDir = temp;
 				}
 			}
 		}
