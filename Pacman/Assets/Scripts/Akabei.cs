@@ -70,7 +70,7 @@ public class Akabei : Mover {
 		return true;
 	}
 
-	void Update() {
+	private void Update() {
 
 		if (canMove) {
 			setTarget ();
