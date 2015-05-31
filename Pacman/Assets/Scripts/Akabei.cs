@@ -5,6 +5,8 @@ public class Akabei : Mover {
 	private GameObject pacman;
 	private Vector2 prevPos;
 	private Vector2 currentPos;
+	private delegate void Regime ();
+	private Regime currentRegime;
 	private readonly Vector2[] fodbiddenUp = { new Vector2 (15.0f, 20.0f), 
 											   new Vector2 (12.0f, 20.0f),
 											   new Vector2 (12.0f,  8.0f),
@@ -13,15 +15,15 @@ public class Akabei : Mover {
 										       new Vector2 ( 1.0f, 0.0f),
 											   new Vector2 ( 0.0f,-1.0f),
 											   new Vector2 ( 0.0f, 1.0f) };
-	
 	protected Vector2 target;
-	
+
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
+		currentRegime = new Regime(Chase);
 	}
 
-	protected virtual void setTarget() {
+	protected virtual void Chase() {
 		target = (Vector2)pacman.transform.position;
 	}
 
@@ -73,7 +75,7 @@ public class Akabei : Mover {
 	private void Update() {
 
 		if (canMove) {
-			setTarget ();
+			currentRegime();
 			searchPath ((int)target.x, (int)target.y);
 		}
 	}

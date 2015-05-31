@@ -7,7 +7,7 @@ public class Aosuke : Akabei {
 		base.Start ();
 	}
 
-	protected override void setTarget() {
+	protected override void Chase() {
 		
 	}
 }

@@ -7,7 +7,7 @@ public class Pinky : Akabei {
 		base.Start ();
 	}
 
-	protected override void setTarget() {
+	protected override void Chase() {
 
 	}
 }
