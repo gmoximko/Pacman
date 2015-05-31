@@ -26,10 +26,16 @@ public class Akabei : Mover {
 		scatterPoint = new Vector2 (27.0f, 33.0f);
 	}
 
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "Player") {
+			GameManager.gameManager.SendMessage("Restart");
+		}
+	}
+
 	protected virtual void Chase() {
 		target = (Vector2)pacman.transform.position;
 	}
-
+	
 	private void Scatter() {
 		target = scatterPoint;
 	}
