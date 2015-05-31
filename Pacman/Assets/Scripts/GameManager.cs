@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-	//[HideInInspector]public List<Vector2> foods;
 	public const int foodCount = 240;
 	public delegate void voidFunc ();
 	public event voidFunc gameStart;
 	public static GameManager gameManager = null;
 	public BoardManager boardManager;
 	
-	void Awake () {
+	private void Awake () {
 
 		if (gameManager == null) {
 			gameManager = this;
@@ -18,7 +17,6 @@ public class GameManager : MonoBehaviour {
 		}
 		GameManager.gameManager.gameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
-		//foods = new List<Vector2> (foodCount);
 		gameStart ();
 	}
 
@@ -26,7 +24,7 @@ public class GameManager : MonoBehaviour {
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
-	void OnLevelWasLoaded() {
+	private void OnLevelWasLoaded() {
 		gameStart ();
 	}
 }

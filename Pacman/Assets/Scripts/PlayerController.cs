@@ -17,7 +17,7 @@ public class PlayerController : Mover {
 		foodEaten = 0;
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
+	private void OnTriggerEnter2D(Collider2D other) {
 
 		if (other.tag == "Food") {
 			foodEaten++;
@@ -31,7 +31,7 @@ public class PlayerController : Mover {
 		other.gameObject.SetActive(false);
 	}
 
-	void Update () {
+	private void Update () {
 
 		if ((int)Input.GetAxisRaw ("Vertical") != 0) {
 			vertical = (int)Input.GetAxisRaw("Vertical");
