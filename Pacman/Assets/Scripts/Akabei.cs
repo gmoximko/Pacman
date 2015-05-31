@@ -27,6 +27,14 @@ public class Akabei : Mover {
 		setScatterRegime ();
 	}
 
+	private void Update() {
+		
+		if (canMove) {
+			currentRegime();
+			searchPath ((int)target.x, (int)target.y);
+		}
+	}
+
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
 			GameManager.gameManager.SendMessage("Restart");
@@ -106,13 +114,5 @@ public class Akabei : Mover {
 			}
 		}
 		return true;
-	}
-
-	private void Update() {
-
-		if (canMove) {
-			currentRegime();
-			searchPath ((int)target.x, (int)target.y);
-		}
-	}
+	}	
 }
