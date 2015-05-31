@@ -2,14 +2,19 @@
 using System.Collections;
 
 public class PlayerController : Mover {
-	private int vertical = 0;
-	private int horizontal = 0;
-	private int x = -1; //default direction is left
-	private int y = 0;
-	private int foodEaten = 0;
+	private int vertical;
+	private int horizontal;
+	private int x; 
+	private int y;
+	private int foodEaten;
 
 	protected override void Start () {
 		base.Start();
+		vertical = 0;
+		horizontal = 0;
+		x = -1;//default direction is left
+		y = 0;
+		foodEaten = 0;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

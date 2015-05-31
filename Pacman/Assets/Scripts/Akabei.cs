@@ -3,48 +3,47 @@ using System.Collections.Generic;
 
 public class Akabei : Mover {
 	private GameObject pacman;
-	private bool isMove = true;
-	private Stack<Vector2> chooseDir;
+	private Vector2 prevPos;
 	private readonly Vector2[] directions = { new Vector2 (-1.0f, 0.0f), 
 										      new Vector2 ( 1.0f, 0.0f),
 											  new Vector2 ( 0.0f,-1.0f),
 											  new Vector2 ( 0.0f, 1.0f) };
 	
 	protected Vector2 target;
-
 	
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
+		prevPos = new Vector2(14.0f, 18.0f);
 	}
 
-	protected virtual void setPoint() {
+	protected virtual void setTarget() {
 		target = (Vector2)pacman.transform.position;
 	}
 
 	private void searchPath(int x, int y) {
-		Vector2 chooseDir = (Vector2)transform.position;
-		Vector2 currentPos = chooseDir;
+		Vector2 chooseDir = new Vector2(0.0f, 0.0f);
+		Vector2 currentPos = (Vector2)transform.position;
 		float minDistance = 500.0f;
 
 		foreach (Vector2 temp in directions) {
-			if (Physics2D.Linecast(currentPos, currentPos + temp, mask).transform == null) {
+			if (Physics2D.Linecast(currentPos, currentPos + temp, mask).transform == null && currentPos + temp != prevPos) {
 				float currentDistance = Vector2.Distance(currentPos + temp, target);
 
 				if (minDistance > currentDistance) {
-					chooseDir = currentPos + temp;
+					chooseDir = temp;
 					minDistance = currentDistance;
 				}
 			}
 		}
-
-		isMove = move (15, 19);
+		prevPos = currentPos;
+		move ((int)chooseDir.x, (int)chooseDir.y);
 	}
 
 	void Update() {
 
-		if (isMove) {
-			setPoint ();
+		if (canMove) {
+			setTarget ();
 			searchPath ((int)target.x, (int)target.y);
 		}
 	}
