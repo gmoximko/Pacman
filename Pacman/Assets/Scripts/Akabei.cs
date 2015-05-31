@@ -16,8 +16,8 @@ public class Akabei : Mover {
 	protected Vector2 target;
 	protected Vector2 scatterPoint;
 
-	public delegate void Regime ();
-	public Regime currentRegime;
+	private delegate void Regime ();
+	private Regime currentRegime;
 
 	protected override void Start() {
 		base.Start ();
@@ -43,10 +43,12 @@ public class Akabei : Mover {
 
 	public void setScatterRegime() {
 		currentRegime = new Regime (Scatter);
+		Debug.Log ("SETSCATTERREGIME");
 	}
 
 	public void setChaseRegime() {
 		currentRegime = new Regime (Chase);
+		Debug.Log ("SETCHASEREGIME");
 	}
 
 	public void setFrightendRegime() {
@@ -55,6 +57,7 @@ public class Akabei : Mover {
 
 	protected virtual void Chase() {
 		target = (Vector2)pacman.transform.position;
+		Debug.Log ("CHASE");
 	}
 	
 	private void Scatter() {
