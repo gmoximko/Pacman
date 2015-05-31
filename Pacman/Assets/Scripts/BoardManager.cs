@@ -30,10 +30,9 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	private void energizerGo() {
-		Instantiate (energizer, energizers[0], Quaternion.identity);
-		Instantiate (energizer, energizers[1], Quaternion.identity);
-		Instantiate (energizer, energizers[2], Quaternion.identity);
-		Instantiate (energizer, energizers[3], Quaternion.identity);
+		foreach (Vector2 temp in energizers) {
+			Instantiate (energizer, temp, Quaternion.identity);	
+		}
 	}
 
 	private void foodGo() {
