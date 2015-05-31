@@ -64,7 +64,7 @@ public class Akabei : Mover {
 					chooseDir = temp;
 					minDistance = currentDistance;
 				} else if (minDistance == currentDistance) {
-					if      (temp == directions[3]) 
+					if (temp == directions[3]) 
 						chooseDir = temp;
 					else if (temp == directions[0] 
 					         && chooseDir != directions[3]) 
