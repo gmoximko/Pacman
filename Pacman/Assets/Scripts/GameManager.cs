@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour {
 	private float chaseTime;
 	private float frightendTime;
 	private bool changeRegime;
-	private Akabei[] ghosts;
 
 	private void Awake () {
 
@@ -26,10 +25,15 @@ public class GameManager : MonoBehaviour {
 		scatterTime = 7.0f;
 		chaseTime = 20.0f;
 		frightendTime = 8.0f;
-		changeRegime = false;
+		changeRegime = true;
 		GameManager.gameManager.gameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		gameStart ();
+
+		foreach (Akabei temp in boardManager.ghosts) {
+			ScatterRegime += temp.setScatterRegime;
+			ChaseRegime += temp.setChaseRegime;
+		}
 	}
 
 	private void Restart() {

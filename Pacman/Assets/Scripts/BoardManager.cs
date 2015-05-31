@@ -15,7 +15,7 @@ public class BoardManager : MonoBehaviour {
 	public GameObject food;
 	public GameObject energizer;
 	public GameObject pacman;
-	public GameObject[] ghosts;
+	public Akabei[] ghosts;
 
 	public void setLevel() {
 		pacmanGo ();
@@ -25,7 +25,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	private void ghostsGo() {
-		foreach (GameObject temp in ghosts) {
+		foreach (Akabei temp in ghosts) {
 			Instantiate(temp);
 		}
 	}
