@@ -29,11 +29,6 @@ public class GameManager : MonoBehaviour {
 		GameManager.gameManager.gameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		gameStart ();
-
-		foreach (Akabei temp in boardManager.ghosts) {
-			ScatterRegime += temp.setScatterRegime;
-			ChaseRegime += temp.setChaseRegime;
-		}
 	}
 
 	private void Restart() {
@@ -42,6 +37,7 @@ public class GameManager : MonoBehaviour {
 
 	private void OnLevelWasLoaded() {
 		gameStart ();
+		changeRegime = true;
 	}
 
 	private void Update() {

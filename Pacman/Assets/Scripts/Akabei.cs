@@ -24,7 +24,8 @@ public class Akabei : Mover {
 		pacman = GameObject.FindGameObjectWithTag("Player");
 		scatterPoint = new Vector2 (27.0f, 34.0f);
 		prevPos = new Vector2 (15.0f, 19.0f); //идти вправо в самом начале запрещено
-		setScatterRegime ();
+		GameManager.gameManager.ScatterRegime += setScatterRegime;
+		GameManager.gameManager.ChaseRegime += setChaseRegime;
 	}
 
 	private void Update() {
@@ -43,12 +44,10 @@ public class Akabei : Mover {
 
 	public void setScatterRegime() {
 		currentRegime = new Regime (Scatter);
-		Debug.Log ("SETSCATTERREGIME");
 	}
 
 	public void setChaseRegime() {
 		currentRegime = new Regime (Chase);
-		Debug.Log ("SETCHASEREGIME");
 	}
 
 	public void setFrightendRegime() {
@@ -57,7 +56,6 @@ public class Akabei : Mover {
 
 	protected virtual void Chase() {
 		target = (Vector2)pacman.transform.position;
-		Debug.Log ("CHASE");
 	}
 	
 	private void Scatter() {
