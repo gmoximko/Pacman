@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 		gameStart ();
 	}
 
-	public void Restart() {
+	private void Restart() {
 		Application.LoadLevel (Application.loadedLevel);
 	}
 

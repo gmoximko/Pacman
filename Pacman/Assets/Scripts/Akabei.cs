@@ -22,7 +22,7 @@ public class Akabei : Mover {
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
-		currentRegime = new Regime (Frightend);
+		currentRegime = new Regime (Scatter);
 		scatterPoint = new Vector2 (27.0f, 33.0f);
 	}
 
@@ -35,14 +35,13 @@ public class Akabei : Mover {
 	}
 
 	private void Frightend() {
-		Vector2 temp;
+		Vector2 temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
+		//GetComponent<Animator> ().SetTrigger ("Frightend");
 
-		do {
-			temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
-			//if (temp.x != 0) temp.y = 0;
-		} while(Physics2D.Linecast(currentPos, currentPos + temp, mask).transform != null);
-
-		target = temp;
+		if (temp.x != 0.0f) {
+			temp.y = 0.0f;
+		}
+		target = currentPos + temp;
 	}
 
 	private void searchPath(int x, int y) {
