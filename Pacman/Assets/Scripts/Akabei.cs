@@ -22,14 +22,27 @@ public class Akabei : Mover {
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
-		currentRegime = new Regime (Scatter);
-		scatterPoint = new Vector2 (27.0f, 33.0f);
+		scatterPoint = new Vector2 (27.0f, 34.0f);
+		prevPos = new Vector2 (15.0f, 19.0f); //идти вправо в самом начале запрещено
+		setScatterRegime ();
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
 			GameManager.gameManager.SendMessage("Restart");
 		}
+	}
+
+	public void setScatterRegime() {
+		currentRegime = new Regime (Scatter);
+	}
+
+	public void setChaseRegime() {
+		currentRegime = new Regime (Chase);
+	}
+
+	public void setFrightendRegime() {
+		currentRegime = new Regime (Frightend);
 	}
 
 	protected virtual void Chase() {
@@ -42,7 +55,7 @@ public class Akabei : Mover {
 
 	private void Frightend() {
 		Vector2 temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
-		//GetComponent<Animator> ().SetTrigger ("Frightend");
+		GetComponent<Animator> ().SetTrigger ("Frightend");
 
 		if (temp.x != 0.0f) {
 			temp.y = 0.0f;
