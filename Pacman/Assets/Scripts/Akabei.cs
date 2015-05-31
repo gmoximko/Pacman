@@ -5,8 +5,6 @@ public class Akabei : Mover {
 	private GameObject pacman;
 	private Vector2 prevPos;
 	private Vector2 currentPos;
-	private delegate void Regime ();
-	private Regime currentRegime;
 	private readonly Vector2[] fodbiddenUp = { new Vector2 (15.0f, 20.0f), 
 											   new Vector2 (12.0f, 20.0f),
 											   new Vector2 (12.0f,  8.0f),
@@ -16,15 +14,35 @@ public class Akabei : Mover {
 											   new Vector2 ( 0.0f,-1.0f),
 											   new Vector2 ( 0.0f, 1.0f) };
 	protected Vector2 target;
+	protected Vector2 scatterPoint;
+
+	public delegate void Regime ();
+	public Regime currentRegime;
 
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
-		currentRegime = new Regime(Chase);
+		currentRegime = new Regime (Frightend);
+		scatterPoint = new Vector2 (27.0f, 33.0f);
 	}
 
 	protected virtual void Chase() {
 		target = (Vector2)pacman.transform.position;
+	}
+
+	private void Scatter() {
+		target = scatterPoint;
+	}
+
+	private void Frightend() {
+		Vector2 temp;
+
+		do {
+			temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
+			//if (temp.x != 0) temp.y = 0;
+		} while(Physics2D.Linecast(currentPos, currentPos + temp, mask).transform != null);
+
+		target = temp;
 	}
 
 	private void searchPath(int x, int y) {
