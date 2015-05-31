@@ -38,7 +38,7 @@ public class Akabei : Mover {
 				if (minDistance > currentDistance) {
 					chooseDir = temp;
 					minDistance = currentDistance;
-				}
+				} 
 			}
 		}
 		prevPos = currentPos;
