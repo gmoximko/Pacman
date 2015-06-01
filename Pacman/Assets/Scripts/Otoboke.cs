@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Otoboke : Akabei {
+public class Otoboke : Ghost {
 
 	protected override void Start() {
 		base.Start ();

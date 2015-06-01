@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pinky : Akabei {
+public class Pinky : Ghost {
 
 	protected override void Start() {
 		base.Start ();
