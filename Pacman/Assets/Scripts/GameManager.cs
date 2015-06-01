@@ -2,18 +2,18 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-	public const int foodCount = 240;
-	public delegate void VoidFunc ();
-	public event VoidFunc gameStart;
-	public event VoidFunc ScatterRegime;
-	public event VoidFunc ChaseRegime;
-	public static GameManager gameManager = null;
-	public BoardManager boardManager;
-	
 	private float scatterTime;
 	private float chaseTime;
 	private float frightendTime;
 	private bool changeRegime;
+
+	public const int foodCount = 240;
+	public delegate void VoidFunc ();
+	public event VoidFunc GameStart;
+	public event VoidFunc ScatterRegime;
+	public event VoidFunc ChaseRegime;
+	public static GameManager gameManager = null;
+	public BoardManager boardManager;
 
 	private void Awake () {
 
@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour {
 		chaseTime = 20.0f;
 		frightendTime = 8.0f;
 		changeRegime = true;
-		GameManager.gameManager.gameStart += boardManager.setLevel;
+		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
-		gameStart ();
+		GameStart ();
 	}
 
 	private void Restart() {
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void OnLevelWasLoaded() {
-		gameStart ();
+		GameStart ();
 		changeRegime = true;
 	}
 

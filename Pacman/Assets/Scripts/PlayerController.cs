@@ -7,6 +7,8 @@ public class PlayerController : Mover {
 	private int x; 
 	private int y;
 	private int foodEaten;
+	public delegate void Regime();
+	public event Regime FrightendRegime;
 
 	protected override void Start () {
 		base.Start();
@@ -56,5 +58,10 @@ public class PlayerController : Mover {
 				y = vertical;
 			}
 		}
+	}
+
+	private IEnumerator frightendRegime() {
+		FrightendRegime ();
+		yield return new WaitForSeconds (2.0f);
 	}
 }
