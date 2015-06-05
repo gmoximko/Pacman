@@ -25,9 +25,7 @@ public class PlayerController : Mover {
 
 		if (other.tag == "Food") {
 			foodEaten++;
-
 			if (GameManager.foodCount == foodEaten) {
-				//GameManager.gameManager.Restart();
 				GameManager.gameManager.SendMessage("Restart");
 			}
 		} else if (other.tag == "Energizer") {
