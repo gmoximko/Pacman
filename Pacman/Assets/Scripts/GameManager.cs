@@ -74,10 +74,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private IEnumerator frightendRegime() {
-		string temp = setRegime.Substring(5);
-		setRegime = "";
+		string temp = (setRegime == "" ? "scatter" : setRegime.Substring(5));
+		setRegime = "stop_frightend";
 		FrightendRegime ();
 		yield return new WaitForSeconds (frightendTime);
-		setRegime = (temp == "" ? "scatter" : temp);
+		setRegime = temp;
 	}
 }
