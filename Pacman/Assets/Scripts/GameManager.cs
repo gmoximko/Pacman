@@ -8,12 +8,13 @@ public class GameManager : MonoBehaviour {
 	private bool changeRegime;
 
 	public const int foodCount = 240;
+	public static GameManager gameManager = null;
+	public BoardManager boardManager;
 	public delegate void VoidFunc ();
 	public event VoidFunc GameStart;
 	public event VoidFunc ScatterRegime;
 	public event VoidFunc ChaseRegime;
-	public static GameManager gameManager = null;
-	public BoardManager boardManager;
+	public event VoidFunc FrightendRegime;
 
 	private void Awake () {
 
