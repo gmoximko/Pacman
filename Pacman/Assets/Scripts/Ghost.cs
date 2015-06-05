@@ -23,8 +23,8 @@ public abstract class Ghost : Mover {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
 		prevPos = new Vector2 (15.0f, 19.0f); //идти вправо в самом начале запрещено
-		GameManager.gameManager.ScatterRegime += setScatterRegime;
-		GameManager.gameManager.ChaseRegime += setChaseRegime;
+		GameManager.gameManager.ScatterRegime 	+= setScatterRegime;
+		GameManager.gameManager.ChaseRegime 	+= setChaseRegime;
 		GameManager.gameManager.FrightendRegime += setFrightendRegime;
 	}
 	

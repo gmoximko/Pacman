@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour {
 	public event VoidFunc ChaseRegime;
 	public event VoidFunc FrightendRegime;
 
+	public void callFrightend() {
+		FrightendRegime ();
+	}
+
 	private void Awake () {
 
 		if (gameManager == null) {

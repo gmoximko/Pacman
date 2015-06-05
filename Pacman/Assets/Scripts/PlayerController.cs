@@ -8,6 +8,9 @@ public class PlayerController : Mover {
 	private int y;
 	private int foodEaten;
 
+	private delegate void VoidFunc();
+	private event VoidFunc CallFrightendRegime;
+
 	protected override void Start () {
 		base.Start();
 		vertical = 0;
@@ -15,6 +18,7 @@ public class PlayerController : Mover {
 		x = -1;//default direction is left
 		y = 0;
 		foodEaten = 0;
+		CallFrightendRegime += GameManager.gameManager.callFrightend;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -27,7 +31,7 @@ public class PlayerController : Mover {
 				GameManager.gameManager.SendMessage("Restart");
 			}
 		} else if (other.tag == "Energizer") {
-
+			CallFrightendRegime();
 		}
 		other.gameObject.SetActive(false);
 	}
