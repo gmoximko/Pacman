@@ -27,7 +27,7 @@ public class PlayerController : Mover {
 				GameManager.gameManager.SendMessage("Restart");
 			}
 		} else if (other.tag == "Energizer") {
-			GameManager.gameManager.FrightendRegime();
+
 		}
 		other.gameObject.SetActive(false);
 	}

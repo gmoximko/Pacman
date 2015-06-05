@@ -6,7 +6,7 @@ public abstract class Ghost : Mover {
 	private Regime currentRegime;
 	private Vector2 prevPos;
 	private Vector2 currentPos;
-	private readonly Vector2[] fodbiddenUp = { new Vector2 (15.0f, 20.0f), 
+	private readonly Vector2[] forbiddenUp = { new Vector2 (15.0f, 20.0f), 
 											   new Vector2 (12.0f, 20.0f),
 											   new Vector2 (12.0f,  8.0f),
 											   new Vector2 (15.0f,  8.0f) };
@@ -106,7 +106,7 @@ public abstract class Ghost : Mover {
 			return false;
 		}
 		
-		foreach (Vector2 temp in fodbiddenUp) {
+		foreach (Vector2 temp in forbiddenUp) {
 			if (temp == nextPos 
 			    && currentPos - nextPos == new Vector2(0.0f, -1.0f)) {//идём наверх в запрещённых точках
 				return false;
