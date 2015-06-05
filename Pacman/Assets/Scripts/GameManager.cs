@@ -5,7 +5,8 @@ public class GameManager : MonoBehaviour {
 	private float scatterTime;
 	private float chaseTime;
 	private float frightendTime;
-	private bool changeRegime;
+	private string setRegime;
+	private Coroutine regimes;
 
 	public const int foodCount = 240;
 	public static GameManager gameManager = null;
@@ -17,7 +18,8 @@ public class GameManager : MonoBehaviour {
 	public event VoidFunc FrightendRegime;
 
 	public void callFrightend() {
-		FrightendRegime ();
+		StopCoroutine (regimes);
+		StartCoroutine (frightendRegime());
 	}
 
 	private void Awake () {
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour {
 		scatterTime = 7.0f;
 		chaseTime = 20.0f;
 		frightendTime = 8.0f;
-		changeRegime = true;
+		setRegime = "scatter";
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -42,25 +44,40 @@ public class GameManager : MonoBehaviour {
 
 	private void OnLevelWasLoaded() {
 		GameStart ();
-		changeRegime = true;
+		setRegime = "scatter";
 	}
 
 	private void Update() {
-		if (changeRegime) {
-			StartCoroutine(scatterRegime());
+
+		if (setRegime == "scatter") {
+			Debug.Log(setRegime);
+			regimes = StartCoroutine (scatterRegime ());
+		} else if (setRegime == "chase") {
+			Debug.Log(setRegime);
+			regimes = StartCoroutine (chaseRegime ());
+
 		}
 	}
 
 	private IEnumerator scatterRegime() {
-		changeRegime = false;
+		setRegime = "";
 		ScatterRegime ();
 		yield return new WaitForSeconds (scatterTime);
-		StartCoroutine (chaseRegime());
+		setRegime = "chase";
 	}
 
 	private IEnumerator chaseRegime() {
+		setRegime = "";
 		ChaseRegime ();
 		yield return new WaitForSeconds (chaseTime);
-		changeRegime = true;
+		setRegime = "scatter";
+	}
+
+	private IEnumerator frightendRegime() {
+		string temp = setRegime;
+		setRegime = "";
+		FrightendRegime ();
+		yield return new WaitForSeconds (frightendTime);
+		setRegime = (temp == "" ? "scatter" : temp);
 	}
 }
