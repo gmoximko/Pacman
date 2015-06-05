@@ -60,21 +60,21 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private IEnumerator scatterRegime() {
-		setRegime = "";
+		setRegime = "stop_scatter";
 		ScatterRegime ();
 		yield return new WaitForSeconds (scatterTime);
 		setRegime = "chase";
 	}
 
 	private IEnumerator chaseRegime() {
-		setRegime = "";
+		setRegime = "stop_chase";
 		ChaseRegime ();
 		yield return new WaitForSeconds (chaseTime);
 		setRegime = "scatter";
 	}
 
 	private IEnumerator frightendRegime() {
-		string temp = setRegime;
+		string temp = setRegime.Substring(5);
 		setRegime = "";
 		FrightendRegime ();
 		yield return new WaitForSeconds (frightendTime);
