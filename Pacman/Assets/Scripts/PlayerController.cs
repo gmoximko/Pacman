@@ -20,6 +20,7 @@ public class PlayerController : Mover {
 		x = -1;//default direction is left
 		y = 0;
 		foodEaten = 0;
+		dir = new Vector2(x, y);
 		CallFrightendRegime += GameManager.gameManager.callFrightend;
 	}
 
