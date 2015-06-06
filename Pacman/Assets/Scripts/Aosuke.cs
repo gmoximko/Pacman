@@ -19,9 +19,8 @@ public class Aosuke : Ghost {
 
 		Vector2 akabeiPos = (Vector2)akabei.transform.position;
 		Vector2 middlePoint = (Vector2)pacman.transform.position + pacman.GetComponent<PlayerController> ().dir * 2;
-		float middleDistance = Vector2.Distance(akabeiPos, middlePoint);
-		target = Vector2.Lerp (akabeiPos, middlePoint, middleDistance * 2);
-		Debug.Log ("AKABEI: " + akabeiPos.ToString ());
-		Debug.Log ("TARGET Aosuke: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
+		middlePoint -= (akabeiPos - middlePoint);
+		target = middlePoint;
+		//Debug.Log ("TARGET Aosuke: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
 	}
 }
