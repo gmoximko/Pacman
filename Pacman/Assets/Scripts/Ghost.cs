@@ -72,8 +72,9 @@ public abstract class Ghost : Mover {
 	
 	private void Frightend() {
 		Vector2 temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
-		if (!anim.GetBool("Frightend"))
+		if (!anim.GetBool ("Frightend")) {
 			GetComponent<Animator> ().SetTrigger ("Frightend");
+		}
 
 		if (temp.x != 0.0f) {
 			temp.y = 0.0f;
