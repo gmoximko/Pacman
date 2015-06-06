@@ -29,16 +29,15 @@ public abstract class Ghost : Mover {
 	}
 	
 	private void Update() {
-		
 		if (canMove && currentRegime != null) {
 			currentRegime();
 			searchPath ((int)target.x, (int)target.y);
 		}
 	}
-	
+
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
-			GameManager.gameManager.SendMessage("Restart");
+			GameManager.gameManager.SendMessage ("Restart");
 		}
 	}
 	
