@@ -63,8 +63,9 @@ public abstract class Mover : MonoBehaviour {
 	private void setAnimation(Vector2 end) {
 		Vector2 startPos = (Vector2)transform.position;
 
-		if (anim.tag != "Player" && anim.GetBool("Frightend")) 
+		if (anim.tag != "Player" && anim.GetBool ("Frightend")) {
 			return;
+		}
 
 		if (startPos.x - end.x > 0.0f) {
 			anim.SetTrigger ("Left");
