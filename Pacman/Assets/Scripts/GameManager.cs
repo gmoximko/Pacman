@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 
 	public void callFrightend() {
 		StopCoroutine (regimes);
-		StartCoroutine (frightendRegime());
+		regimes = StartCoroutine (frightendRegime());
 	}
 
 	private void Awake () {
@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Restart() {
+		StopCoroutine (regimes);
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
@@ -50,12 +51,9 @@ public class GameManager : MonoBehaviour {
 	private void Update() {
 
 		if (setRegime == "scatter") {
-			Debug.Log(setRegime);
 			regimes = StartCoroutine (scatterRegime ());
 		} else if (setRegime == "chase") {
-			Debug.Log(setRegime);
 			regimes = StartCoroutine (chaseRegime ());
-
 		}
 	}
 
