@@ -17,11 +17,6 @@ public class GameManager : MonoBehaviour {
 	public event VoidFunc ChaseRegime;
 	public event VoidFunc FrightendRegime;
 
-	public void callFrightend() {
-		StopCoroutine (regimes);
-		regimes = StartCoroutine (frightendRegime());
-	}
-
 	private void Awake () {
 
 		if (gameManager == null) {
@@ -36,6 +31,11 @@ public class GameManager : MonoBehaviour {
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
+	}
+
+	private void callFrightend() {
+		StopCoroutine (regimes);
+		regimes = StartCoroutine (frightendRegime());
 	}
 
 	private void Restart() {
