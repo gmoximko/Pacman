@@ -4,10 +4,10 @@ using System.Collections;
 public abstract class Mover : MonoBehaviour {
 	private Rigidbody2D body;
 	private Collider2D coll;
-	private Animator anim;
 	private readonly Vector2 rightTunnel = new Vector2 (27.0f, 16.0f);
 	private readonly Vector2 leftTunnel  = new Vector2 ( 0.0f, 16.0f);
 
+	protected Animator anim;
 	protected bool canMove;
 
 	public float speed;
