@@ -9,6 +9,7 @@ public class Otoboke : Ghost {
 	}
 
 	protected override void Chase() {
-		
+
+		//Debug.Log ("TARGET Otoboke: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
 	}
 }

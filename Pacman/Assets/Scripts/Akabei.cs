@@ -10,6 +10,6 @@ public class Akabei : Ghost {
 
 	protected override void Chase() {
 		target = (Vector2)pacman.transform.position;
-		Debug.Log ("TARGET Akabei: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
+		//Debug.Log ("TARGET Akabei: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
 	}
 }
