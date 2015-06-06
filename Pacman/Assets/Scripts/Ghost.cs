@@ -59,7 +59,7 @@ public abstract class Ghost : Mover {
 	public void setFrightendRegime() {
 		prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
 		currentRegime = new Regime (Frightend);
-		anim.SetTrigger ("Frightend");
+		//anim.SetTrigger ("Frightend"); //ПЕРЕДЕЛАТЬ!
 	}
 	
 	protected abstract void Chase ();
@@ -72,7 +72,7 @@ public abstract class Ghost : Mover {
 		Vector2 temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
 
 		if (anim != null && !anim.GetBool ("Frightend")) {
-			anim.SetTrigger ("Frightend");
+			anim.SetTrigger ("Frightend"); //ПЕРЕДЕЛАТЬ!
 		}
 
 		if (temp.x != 0.0f) {
