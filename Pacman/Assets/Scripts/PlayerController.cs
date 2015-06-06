@@ -11,6 +11,8 @@ public class PlayerController : Mover {
 	private delegate void VoidFunc();
 	private event VoidFunc CallFrightendRegime;
 
+	[HideInInspector]public Vector2 dir;
+
 	protected override void Start () {
 		base.Start();
 		vertical = 0;
@@ -56,6 +58,7 @@ public class PlayerController : Mover {
 			} else {
 				x = horizontal;
 				y = vertical;
+				dir = new Vector2(x, y);
 			}
 		}
 	}
