@@ -40,9 +40,6 @@ public class GameManager : MonoBehaviour {
 
 	private void Restart() {
 		StopCoroutine (regimes);
-		ScatterRegime = null;
-		ChaseRegime = null;
-		FrightendRegime = null;
 		Application.LoadLevel (Application.loadedLevel);
 	}
 

@@ -40,7 +40,13 @@ public abstract class Ghost : Mover {
 			GameManager.gameManager.SendMessage ("Restart");
 		}
 	}
-	
+
+	private void OnDestroy() {
+		GameManager.gameManager.ScatterRegime 	-= setScatterRegime;
+		GameManager.gameManager.ChaseRegime 	-= setChaseRegime;
+		GameManager.gameManager.FrightendRegime -= setFrightendRegime;
+	}
+
 	public void setScatterRegime() {
 		if (anim != null && !anim.GetBool ("Frightend")) {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
