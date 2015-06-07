@@ -48,15 +48,19 @@ public abstract class Ghost : Mover {
 	}
 
 	public void setScatterRegime() {
-		if (anim != null && !anim.GetBool ("Frightend")) {
+		if (!frightend) {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
+		} else {
+			frightend = false;
 		}
 		currentRegime = new Regime (Scatter);
 	}
 	
 	public void setChaseRegime() {
-		if (anim != null && !anim.GetBool ("Frightend")) {
+		if (!frightend) {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);	
+		} else {
+			frightend = false;
 		}
 		currentRegime = new Regime (Chase);
 	}
@@ -64,7 +68,8 @@ public abstract class Ghost : Mover {
 	public void setFrightendRegime() {
 		prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
 		currentRegime = new Regime (Frightend);
-		//anim.SetTrigger ("Frightend"); //ПЕРЕДЕЛАТЬ!
+		anim.SetTrigger ("Frightend");
+		frightend = true;
 	}
 	
 	protected abstract void Chase ();
@@ -75,10 +80,6 @@ public abstract class Ghost : Mover {
 	
 	private void Frightend() {
 		Vector2 temp = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
-
-		if (anim != null && !anim.GetBool ("Frightend")) {
-			anim.SetTrigger ("Frightend"); //ПЕРЕДЕЛАТЬ!
-		}
 
 		if (temp.x != 0.0f) {
 			temp.y = 0.0f;

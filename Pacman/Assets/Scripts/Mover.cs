@@ -9,6 +9,7 @@ public abstract class Mover : MonoBehaviour {
 
 	protected Animator anim;
 	protected bool canMove;
+	protected bool frightend;
 
 	public float speed;
 	public LayerMask mask;
@@ -18,6 +19,7 @@ public abstract class Mover : MonoBehaviour {
 		coll = GetComponent<Collider2D> ();
 		anim = GetComponent<Animator> ();
 		canMove = true;
+		frightend = false;
 	}
 
 	protected bool move(int x, int y) {
@@ -63,7 +65,7 @@ public abstract class Mover : MonoBehaviour {
 	private void setAnimation(Vector2 end) {
 		Vector2 startPos = (Vector2)transform.position;
 
-		if (anim.tag != "Player" && anim.GetBool ("Frightend")) {
+		if (frightend) {
 			return;
 		}
 
