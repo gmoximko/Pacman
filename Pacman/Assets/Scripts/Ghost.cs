@@ -10,15 +10,15 @@ public abstract class Ghost : Mover {
 											   new Vector2 (12.0f, 20.0f),
 											   new Vector2 (12.0f,  8.0f),
 											   new Vector2 (15.0f,  8.0f) };
-	private readonly Vector2[] directions  = { new Vector2 (-1.0f, 0.0f), 
-											   new Vector2 ( 1.0f, 0.0f),
+	protected readonly Vector2[] directions= { new Vector2 (-1.0f, 0.0f), 
+									    	   new Vector2 ( 1.0f, 0.0f),
 		   									   new Vector2 ( 0.0f,-1.0f),
 											   new Vector2 ( 0.0f, 1.0f) };
 
 	protected GameObject pacman;
 	protected Vector2 target;
 	protected Vector2 scatterPoint;
-
+	
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
@@ -116,7 +116,7 @@ public abstract class Ghost : Mover {
 		move ((int)chooseDir.x, (int)chooseDir.y);
 	}
 	
-	private bool pathFree(Vector2 nextPos) {
+	protected bool pathFree(Vector2 nextPos) {
 		
 		if (nextPos == prevPos) {
 			return false;
