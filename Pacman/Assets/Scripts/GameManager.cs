@@ -26,9 +26,7 @@ public class GameManager : MonoBehaviour {
 		} else if (gameManager != this) {
 			Destroy(gameObject);
 		}
-		level = 1;
-		wave  = 1;
-		setRegime = "scatter";
+		firstLevel ();
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -47,14 +45,14 @@ public class GameManager : MonoBehaviour {
 	private void OnLevelWasLoaded() {
 		GameStart ();
 		setRegime = "scatter";
-		level++;
 		wave = 1;
+		setTimeFrightend (level, out frightendTime);
 	}
 
 	private void Update() {
 
 		if (setRegime == "scatter") {
-			setTimeForRegimes(wave, level, out scatterTime, out chaseTime, out frightendTime);
+			setTimeForRegimes(wave, level, out scatterTime, out chaseTime);
 			regimes = StartCoroutine (scatterRegime ());
 		} else if (setRegime == "chase") {
 			regimes = StartCoroutine (chaseRegime ());
@@ -73,6 +71,7 @@ public class GameManager : MonoBehaviour {
 		ChaseRegime ();
 		yield return new WaitForSeconds (chaseTime);
 		setRegime = "scatter";
+		Debug.Log ("WAVE " + wave.ToString());
 		wave = (wave == 4 ? wave : wave + 1);
 	}
 
@@ -84,13 +83,45 @@ public class GameManager : MonoBehaviour {
 		setRegime = temp;
 	}
 
+	private void firstLevel() {
+		level = 1;
+		wave  = 1;
+		frightendTime = 6.0f;
+		setRegime = "scatter";
+	}
+
+	private void nextLevel() {
+		level++;
+	}
+
+	private void setTimeFrightend(int level, out float frightendTime) {
+		switch (level) {
+		case  1: frightendTime = 6.0f; break;
+		case  2: frightendTime = 5.0f; break;
+		case  3: frightendTime = 4.0f; break;
+		case  4: frightendTime = 3.0f; break;
+		case  5: frightendTime = 2.0f; break;
+		case  6: frightendTime = 5.0f; break;
+		case  7: frightendTime = 2.0f; break;
+		case  8: frightendTime = 2.0f; break;
+		case  9: frightendTime = 1.0f; break;
+		case 10: frightendTime = 5.0f; break;
+		case 11: frightendTime = 2.0f; break;
+		case 12: frightendTime = 1.0f; break;
+		case 13: frightendTime = 1.0f; break;
+		case 14: frightendTime = 3.0f; break;
+		case 15: frightendTime = 1.0f; break;
+		case 16: frightendTime = 1.0f; break;
+		case 18: frightendTime = 1.0f; break;
+		default: frightendTime = 0.0f; break;
+		}
+	}
+
 	private void setTimeForRegimes(int wave, int level, 
 	                               out float scatterTime, 
-	                               out float chaseTime, 
-	                               out float frightendTime) {
+	                               out float chaseTime) {
 		scatterTime = 0.0f;
 		chaseTime = 0.0f;
-		frightendTime = 0.0f;
 		
 		if (level == 1) {
 			switch (wave) {
@@ -150,6 +181,5 @@ public class GameManager : MonoBehaviour {
 				break;
 			}
 		}
-		frightendTime = 6.0f;
 	}
 }
