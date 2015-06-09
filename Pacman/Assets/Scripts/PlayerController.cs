@@ -60,4 +60,14 @@ public class PlayerController : Mover {
 			}
 		}
 	}
+
+	protected override float setSpeed(int level) {
+		if (level == 1) {
+			return speedValue * 0.8f;
+		} else if ((level > 1 && level < 5) || level >= 21) {
+			return speedValue * 0.9f;
+		} else {
+			return speedValue;
+		}
+	}
 }

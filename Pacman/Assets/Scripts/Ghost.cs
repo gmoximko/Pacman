@@ -53,6 +53,7 @@ public abstract class Ghost : Mover {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
 		} else {
 			frightend = false;
+			speed = setSpeed(GameManager.gameManager.level);
 		}
 		currentRegime = new Regime (Scatter);
 	}
@@ -62,6 +63,7 @@ public abstract class Ghost : Mover {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);	
 		} else {
 			frightend = false;
+			speed = setSpeed(GameManager.gameManager.level);
 		}
 		currentRegime = new Regime (Chase);
 	}
@@ -71,6 +73,7 @@ public abstract class Ghost : Mover {
 		currentRegime = new Regime (Frightend);
 		anim.SetTrigger ("Frightend");
 		frightend = true;
+		speed = frightendSpeed (GameManager.gameManager.level);
 	}
 	
 	protected abstract void Chase ();
@@ -131,5 +134,27 @@ public abstract class Ghost : Mover {
 			}
 		}
 		return true;
+	}
+
+	protected override float setSpeed(int level) {
+		if (level == 1) {
+			return speedValue * 0.75f;
+		} else if ((level > 1 && level < 5) || level >= 21) {
+			return speedValue * 0.85f;
+		} else {
+			return speedValue * 0.95f;
+		}
+	}
+
+	private float frightendSpeed(int level) {
+		if (level == 1) {
+			return speedValue * 0.5f;
+		} else if (level > 1 && level < 5) {
+			return speedValue * 0.55f;
+		} else if ((level >= 5 && level <= 16) || level == 18) {
+			return speedValue * 0.6f;
+		} else {
+			return setSpeed(level);
+		}
 	}
 }

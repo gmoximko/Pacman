@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour {
 	private float frightendTime;
 	private string setRegime;
 	private Coroutine regimes;
-	private int level;
 	private int wave;
 
+	public int level { get; private set; }
 	public const int foodCount = 240;
 	public static GameManager gameManager = null;
 	public BoardManager boardManager;
@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator scatterRegime() {
 		setRegime = "stop_scatter";
 		ScatterRegime ();
+		//Debug.Log ("SCATTERTIME: " + scatterTime.ToString());
 		yield return new WaitForSeconds (scatterTime);
 		setRegime = "chase";
 	}
@@ -69,16 +70,18 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator chaseRegime() {
 		setRegime = "stop_chase";
 		ChaseRegime ();
+		//Debug.Log ("CHASETIME: " + chaseTime.ToString());
 		yield return new WaitForSeconds (chaseTime);
 		setRegime = "scatter";
-		Debug.Log ("WAVE " + wave.ToString());
 		wave = (wave == 4 ? wave : wave + 1);
+		//Debug.Log ("WAVE " + wave.ToString());
 	}
 
 	private IEnumerator frightendRegime() {
 		string temp = (setRegime == "" ? "scatter" : setRegime.Substring(5));
 		setRegime = "stop_frightend";
 		FrightendRegime ();
+		//Debug.Log ("FRIGHTENDTIME: " + frightendTime.ToString());
 		yield return new WaitForSeconds (frightendTime);
 		setRegime = temp;
 	}
@@ -142,7 +145,7 @@ public class GameManager : MonoBehaviour {
 				chaseTime = 10000.0f;
 				break;
 			}
-		} else if (level >= 2 && level < 5) {
+		} else if (level > 1 && level < 5) {
 			switch (wave) {
 			case 1:
 				scatterTime = 7.0f;

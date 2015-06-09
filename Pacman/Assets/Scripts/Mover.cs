@@ -10,8 +10,9 @@ public abstract class Mover : MonoBehaviour {
 	protected Animator anim;
 	protected bool canMove;
 	protected bool frightend;
+	protected float speed;
 
-	public float speed;
+	public const float speedValue = 10.0f;
 	public LayerMask mask;
 
 	protected virtual void Start () {
@@ -20,6 +21,7 @@ public abstract class Mover : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		canMove = true;
 		frightend = false;
+		speed = setSpeed (GameManager.gameManager.level);
 	}
 
 	protected bool move(int x, int y) {
@@ -79,4 +81,6 @@ public abstract class Mover : MonoBehaviour {
 			anim.SetTrigger ("Up");
 		}
 	}
+
+	protected abstract float setSpeed(int level);
 }
