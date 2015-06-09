@@ -139,11 +139,10 @@ public abstract class Ghost : Mover {
 	protected override float setSpeed(int level) {
 		if (level == 1) {
 			return speedValue * 0.75f;
-		} else if ((level > 1 && level < 5) || level >= 21) {
+		} else if (level > 1 && level < 5) {
 			return speedValue * 0.85f;
-		} else {
-			return speedValue * 0.95f;
 		}
+		return speedValue * 0.95f;
 	}
 
 	private float frightendSpeed(int level) {
