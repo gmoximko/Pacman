@@ -66,8 +66,7 @@ public class PlayerController : Mover {
 			return speedValue * 0.8f;
 		} else if ((level > 1 && level < 5) || level >= 21) {
 			return speedValue * 0.9f;
-		} else {
-			return speedValue;
-		}
+		} 
+		return speedValue;
 	}
 }

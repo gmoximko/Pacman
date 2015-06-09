@@ -18,7 +18,7 @@ public abstract class Ghost : Mover {
 	protected GameObject pacman;
 	protected Vector2 target;
 	protected Vector2 scatterPoint;
-	
+
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
@@ -153,8 +153,16 @@ public abstract class Ghost : Mover {
 			return speedValue * 0.55f;
 		} else if ((level >= 5 && level <= 16) || level == 18) {
 			return speedValue * 0.6f;
-		} else {
-			return setSpeed(level);
-		}
+		} 
+		return setSpeed(level);
+	}
+
+	private float tunnelSpeed(int level) {
+		if (level == 1) {
+			return speedValue * 0.4f;
+		} else if (level > 1 && level < 5) {
+			return speedValue * 0.45f;
+		} 
+		return speedValue * 0.5f;
 	}
 }
