@@ -3,14 +3,15 @@ using System.Collections;
 
 public abstract class Mover : MonoBehaviour {
 	private Rigidbody2D body;
-	private Collider2D coll;
 	private readonly Vector2 rightTunnel = new Vector2 (27.0f, 16.0f);
 	private readonly Vector2 leftTunnel  = new Vector2 ( 0.0f, 16.0f);
 
+	protected Collider2D coll;
 	protected Animator anim;
 	protected bool canMove;
 	protected bool frightend;
 	protected float speed;
+	protected Coroutine moving;
 
 	public const float speedValue = 10.0f;
 	public LayerMask mask;
@@ -39,14 +40,14 @@ public abstract class Mover : MonoBehaviour {
 
 		if (hit.transform == null) {
 			setAnimation(end);
-			StartCoroutine(smoothMove(end));
+			moving = StartCoroutine(smoothMove(end));
 			canMove = false;
 			return true;
 		}
 		return false;
 	}
 	
-	private IEnumerator smoothMove(Vector2 direction) {
+	protected IEnumerator smoothMove(Vector2 direction) {
 		float sqrDistance = ((Vector2)transform.position - direction).sqrMagnitude;
 
 		while (sqrDistance > float.Epsilon) {

@@ -6,6 +6,7 @@ public abstract class Ghost : Mover {
 	private Regime currentRegime;
 	private Vector2 prevPos;
 	private Vector2 currentPos;
+	private readonly Vector2 outDoorPos = new Vector2 (14.0f, 19.0f);
 	private readonly Vector2[] forbiddenUp = { new Vector2 (15.0f, 20.0f), 
 											   new Vector2 (12.0f, 20.0f),
 											   new Vector2 (12.0f,  8.0f),
@@ -36,8 +37,13 @@ public abstract class Ghost : Mover {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "Player") {
+		if (other.tag == "Player" && !frightend) {
 			GameManager.gameManager.SendMessage ("firstLevel");
+		} else if (other.tag == "Player" && frightend) {
+			coll.enabled = false;
+			gameObject.SetActive(true);
+			ghostGoesOut();
+			coll.enabled = true;
 		}
 	}
 
@@ -89,7 +95,17 @@ public abstract class Ghost : Mover {
 		}
 		target = currentPos + temp;
 	}
-	
+
+	private void ghostGoesOut() {
+
+		if (moving != null) {
+			StopCoroutine (moving);
+		}
+		StartCoroutine (smoothMove (outDoorPos));
+		currentPos = outDoorPos;
+		prevPos = new Vector2 (15.0f, 19.0f);
+	}
+
 	private void searchPath(int x, int y) {
 		Vector2 chooseDir = new Vector2(0.0f, 0.0f);
 		float minDistance = 500.0f;
