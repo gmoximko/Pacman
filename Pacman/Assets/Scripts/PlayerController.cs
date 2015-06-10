@@ -8,6 +8,9 @@ public class PlayerController : Mover {
 	private int x; 
 	private int y;
 	private int foodEaten;
+	private int foodForAosuke;
+	private int foodForOtoboke;
+	private int foodForPinky;
 	private GameObject[] ghosts;
 
 	[HideInInspector]public Vector2 dir;
@@ -21,6 +24,9 @@ public class PlayerController : Mover {
 		foodEaten = 0;
 		dir = new Vector2(x, y);
 		ghosts = null;
+		foodForPinky = 1;
+		foodForAosuke  = (int)(GameManager.foodCount * 0.15) - GameManager.gameManager.level;
+		foodForOtoboke = (int)(GameManager.foodCount * 0.25) - GameManager.gameManager.level;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -33,11 +39,11 @@ public class PlayerController : Mover {
 			foodEaten++;
 			if (GameManager.foodCount == foodEaten) {
 				GameManager.gameManager.SendMessage("nextLevel");
-			} else if (foodEaten == 1) {
+			} else if (foodEaten == foodForPinky) {
 				findGhost("Pinky(Clone)").SendMessage("ghostGoesOut");
-			} else if (foodEaten == 30) {
+			} else if (foodEaten == (foodForAosuke < 1 ? 1 : foodForAosuke)) {
 				findGhost("Aosuke(Clone)").SendMessage("ghostGoesOut");
-			} else if (foodEaten == 120) {
+			} else if (foodEaten == (foodForOtoboke < 1 ? 1 : foodForOtoboke)) {
 				findGhost("Otoboke(Clone)").SendMessage("ghostGoesOut");
 			}
 		} else if (other.tag == "Energizer") {
