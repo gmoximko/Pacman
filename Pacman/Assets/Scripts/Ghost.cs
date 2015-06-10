@@ -38,7 +38,6 @@ public abstract class Ghost : Mover {
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
 			GameManager.gameManager.SendMessage ("firstLevel");
-			GameManager.gameManager.SendMessage ("Restart");
 		}
 	}
 

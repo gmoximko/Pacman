@@ -26,7 +26,10 @@ public class GameManager : MonoBehaviour {
 		} else if (gameManager != this) {
 			Destroy(gameObject);
 		}
-		firstLevel ();
+		level = 1;
+		wave  = 1;
+		frightendTime = 6.0f;
+		setRegime = "scatter";
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -91,10 +94,12 @@ public class GameManager : MonoBehaviour {
 		wave  = 1;
 		frightendTime = 6.0f;
 		setRegime = "scatter";
+		Restart();
 	}
 
 	private void nextLevel() {
 		level++;
+		Restart();
 	}
 
 	private void setTimeFrightend(int level, out float frightendTime) {

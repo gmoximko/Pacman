@@ -8,6 +8,7 @@ public class PlayerController : Mover {
 	private int y;
 	private int foodEaten;
 
+
 	[HideInInspector]public Vector2 dir;
 
 	protected override void Start () {
@@ -26,7 +27,6 @@ public class PlayerController : Mover {
 			foodEaten++;
 			if (GameManager.foodCount == foodEaten) {
 				GameManager.gameManager.SendMessage("nextLevel");
-				GameManager.gameManager.SendMessage("Restart");
 			}
 		} else if (other.tag == "Energizer") {
 			GameManager.gameManager.SendMessage("callFrightend");
