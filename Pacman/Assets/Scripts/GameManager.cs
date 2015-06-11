@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour {
 		case 18: frightendTime = 1.0f; break;
 		default: frightendTime = 0.0f; break;
 		}
+		Debug.Log ("LEVEL: " + level.ToString() + "\t" + frightendTime.ToString());
 	}
 
 	private void setTimeForRegimes(int wave, int level, 
@@ -189,5 +190,6 @@ public class GameManager : MonoBehaviour {
 				break;
 			}
 		}
+		Debug.Log ("LEVEL: " + level.ToString() + " WAVE: " + wave.ToString());
 	}
 }

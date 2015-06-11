@@ -41,13 +41,13 @@ public abstract class Mover : MonoBehaviour {
 		if (hit.transform == null) {
 			setAnimation(end);
 			moving = StartCoroutine(smoothMove(end));
-			canMove = false;
 			return true;
 		}
 		return false;
 	}
 	
 	protected IEnumerator smoothMove(Vector2 direction) {
+		canMove = false;
 		float sqrDistance = ((Vector2)transform.position - direction).sqrMagnitude;
 
 		while (sqrDistance > float.Epsilon) {
