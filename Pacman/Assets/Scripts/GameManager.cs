@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	private int wave;
 	private Text text;
 	private int pacmanLives;
+	private const int wavesCount = 4;
 
 	public int level { get; private set; }
 	public const int foodCount = 240;
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour {
 		}
 		level = 1;
 		wave  = 1;
-		frightendTime = 6.0f;
+		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
 		pacmanLives = 3;
 		text = FindObjectOfType<Text> ();
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour {
 		//Debug.Log ("CHASETIME: " + chaseTime.ToString());
 		yield return new WaitForSeconds (chaseTime);
 		setRegime = "scatter";
-		wave = (wave == 4 ? wave : wave + 1);
+		wave = (wave == wavesCount ? wave : wave + 1);
 		//Debug.Log ("WAVE " + wave.ToString());
 	}
 
@@ -103,10 +104,7 @@ public class GameManager : MonoBehaviour {
 	private void firstLevel() {
 		//if (pacmanLives == 0) {
 			level = 1;
-			wave = 1;
-			frightendTime = 6.0f;
 			//pacmanLives = 3;
-			setRegime = "scatter";
 			Restart();
 		/*} else {
 			pacmanLives--;
