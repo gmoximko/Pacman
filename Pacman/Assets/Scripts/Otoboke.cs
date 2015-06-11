@@ -13,8 +13,6 @@ public class Otoboke : Ghost {
 		Vector2 pacmanPos = (Vector2)pacman.transform.position;
 		int cells = cellsToPacman (start, pacmanPos);
 		target = (cells > 8 ? pacmanPos : scatterPoint);
-		if (target != ((Vector2)pacman.transform.position))
-			Debug.Log ("I'M HERE");
 		//Debug.Log ("TARGET Otoboke: " + target.ToString() + " PACMAN " + ((Vector2)pacman.transform.position).ToString());
 	}
 
@@ -37,18 +35,7 @@ public class Otoboke : Ghost {
 					if (minDistance > currentDistance) {
 						chooseDir = temp;
 						minDistance = currentDistance;
-					}/* else if (minDistance == currentDistance) {
-						if (temp == directions [3]) 
-							chooseDir = temp;
-						else if (temp == directions [0] 
-							&& chooseDir != directions [3]) 
-							chooseDir = temp;
-						else if (temp == directions [2] 
-							&& chooseDir != directions [3] 
-							&& chooseDir != directions [0]) 
-							chooseDir = temp;
 					}
-					*/
 				}
 			}
 			start += chooseDir;
