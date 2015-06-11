@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	private string setRegime;
 	private Coroutine regimes;
 	private int wave;
+	private Text text;
 
 	public int level { get; private set; }
 	public const int foodCount = 240;
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour {
 		wave  = 1;
 		frightendTime = 6.0f;
 		setRegime = "scatter";
+		text = FindObjectOfType<Text> ();
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	private void callFrightend() {
 		StopCoroutine (regimes);
 		regimes = StartCoroutine (frightendRegime());
+		textManager();
 	}
 
 	private void Restart() {
@@ -50,6 +54,8 @@ public class GameManager : MonoBehaviour {
 		setRegime = "scatter";
 		wave = 1;
 		setTimeFrightend (level, out frightendTime);
+		text = FindObjectOfType<Text> ();
+		textManager ();
 	}
 
 	private void Update() {
@@ -57,8 +63,10 @@ public class GameManager : MonoBehaviour {
 		if (setRegime == "scatter") {
 			setTimeForRegimes(wave, level, out scatterTime, out chaseTime);
 			regimes = StartCoroutine (scatterRegime ());
+			textManager();
 		} else if (setRegime == "chase") {
 			regimes = StartCoroutine (chaseRegime ());
+			textManager();
 		}
 	}
 
@@ -123,7 +131,6 @@ public class GameManager : MonoBehaviour {
 		case 18: frightendTime = 1.0f; break;
 		default: frightendTime = 0.0f; break;
 		}
-		Debug.Log ("LEVEL: " + level.ToString() + "\t" + frightendTime.ToString());
 	}
 
 	private void setTimeForRegimes(int wave, int level, 
@@ -190,6 +197,14 @@ public class GameManager : MonoBehaviour {
 				break;
 			}
 		}
-		Debug.Log ("LEVEL: " + level.ToString() + " WAVE: " + wave.ToString());
+	}
+
+	private void textManager() {
+		text.text = "Level: " + level.ToString ();
+		text.text += "\nWave: " + wave.ToString ();
+		text.text += "\nRegime: " + setRegime;
+		text.text += "\nChase time: " + chaseTime.ToString ();
+		text.text += "\nScatter time: " + scatterTime.ToString ();
+		text.text += "\nFrightend time: " + frightendTime.ToString ();
 	}
 }
