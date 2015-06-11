@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Restart() {
-		StopCoroutine (regimes);
+		//StopCoroutine (regimes);
+		StopAllCoroutines ();
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
@@ -138,7 +139,7 @@ public class GameManager : MonoBehaviour {
 	                               out float chaseTime) {
 		scatterTime = 0.0f;
 		chaseTime = 0.0f;
-		
+
 		if (level == 1) {
 			switch (wave) {
 			case 1:
