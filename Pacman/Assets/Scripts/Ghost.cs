@@ -37,6 +37,10 @@ public abstract class Ghost : Mover {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "Tunnel") {
+			Debug.Log("I'M HERE");
+		}
+
 		if (other.tag == "Player" && !frightend) {
 			GameManager.gameManager.SendMessage ("firstLevel");
 		} else if (other.tag == "Player" && frightend) {
@@ -136,7 +140,7 @@ public abstract class Ghost : Mover {
 		move ((int)chooseDir.x, (int)chooseDir.y);
 	}
 	
-	protected bool pathFree(Vector2 nextPos) {
+	private bool pathFree(Vector2 nextPos) {
 		
 		if (nextPos == prevPos) {
 			return false;

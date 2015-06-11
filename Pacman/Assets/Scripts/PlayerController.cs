@@ -12,6 +12,7 @@ public class PlayerController : Mover {
 	private int foodForOtoboke;
 	private int foodForPinky;
 	private GameObject[] ghosts;
+	private readonly Vector2 startPos = new Vector2(14.0f, 7.0f);
 
 	[HideInInspector]public Vector2 dir;
 
@@ -92,5 +93,9 @@ public class PlayerController : Mover {
 		return (from temp in ghosts
 		        where temp.name == name
 		        select temp).First();
+	}
+
+	private void pacmanHasLives() {
+		smoothMove (startPos);
 	}
 }

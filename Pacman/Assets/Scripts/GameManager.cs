@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	private Coroutine regimes;
 	private int wave;
 	private Text text;
+	private int pacmanLives;
 
 	public int level { get; private set; }
 	public const int foodCount = 240;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour {
 		wave  = 1;
 		frightendTime = 6.0f;
 		setRegime = "scatter";
+		pacmanLives = 3;
 		text = FindObjectOfType<Text> ();
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
@@ -99,11 +101,22 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void firstLevel() {
-		level = 1;
-		wave  = 1;
-		frightendTime = 6.0f;
-		setRegime = "scatter";
-		Restart();
+		//if (pacmanLives == 0) {
+			level = 1;
+			wave = 1;
+			frightendTime = 6.0f;
+			//pacmanLives = 3;
+			setRegime = "scatter";
+			Restart();
+		/*} else {
+			pacmanLives--;
+			GameObject.FindGameObjectWithTag("Player").SendMessage("pacmanHasLives");
+
+			foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Ghost")) {
+				temp.SetActive(false);
+			}
+			boardManager.SendMessage("ghostsGo");
+		}*/
 	}
 
 	private void nextLevel() {
