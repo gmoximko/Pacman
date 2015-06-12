@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 	private float scatterTime;
 	private float chaseTime;
 	private float frightendTime;
+	private float timer;
+	private float t_timer;
 	private string setRegime;
 	private Coroutine regimes;
 	private int wave;
@@ -31,7 +33,9 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		level = 1;
-		wave  = 1;
+		wave  = 0;
+		timer = chaseTime;
+		t_timer = 0.0f;
 		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
 		pacmanLives = 3;
@@ -42,9 +46,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void callFrightend() {
-		StopCoroutine (regimes);
+		//StopCoroutine (regimes);
 		regimes = StartCoroutine (frightendRegime());
 		textManager();
+
 	}
 
 	private void Restart() {
@@ -56,55 +61,52 @@ public class GameManager : MonoBehaviour {
 	private void OnLevelWasLoaded() {
 		GameStart ();
 		setRegime = "scatter";
-		wave = 1;
+		wave = 0;
+		timer = chaseTime;
 		setTimeFrightend (level, out frightendTime);
 		text = FindObjectOfType<Text> ();
 		textManager ();
 	}
 
 	private void Update() {
-
-		if (setRegime == "scatter") {
+		timer += Time.deltaTime;
+	
+		if (setRegime == "scatter" && timer >= chaseTime) {
+			ScatterRegime();
+			textManager();
+			timer = t_timer;//t_timer принимает значение только в режиме страха, чтобы узнать сколько времени длился
+			t_timer = 0.0f; //предыдущий режим, после режима страха снова попадём в прежний режим и тот отыграет t_timer
+			setRegime = "chase";
+			Debug.Log(timer.ToString());
+			if (timer == 0.0f) { //предполагается, что зашли сюда не из режима страха, тогда наступает следующая волна
+				wave = (wave == wavesCount ? wave : wave + 1);
+			}
 			setTimeForRegimes(wave, level, out scatterTime, out chaseTime);
-			regimes = StartCoroutine (scatterRegime ());
+		} else if (setRegime == "chase" && timer >= scatterTime) {
+			ChaseRegime();
 			textManager();
-		} else if (setRegime == "chase") {
-			regimes = StartCoroutine (chaseRegime ());
-			textManager();
+			timer = t_timer;
+			t_timer = 0.0f;
+			setRegime = "scatter";
+			Debug.Log(timer.ToString());
 		}
 	}
 
-	private IEnumerator scatterRegime() {
-		setRegime = "stop_scatter";
-		ScatterRegime ();
-		//Debug.Log ("SCATTERTIME: " + scatterTime.ToString());
-		yield return new WaitForSeconds (scatterTime);
-		setRegime = "chase";
-	}
-
-	private IEnumerator chaseRegime() {
-		setRegime = "stop_chase";
-		ChaseRegime ();
-		//Debug.Log ("CHASETIME: " + chaseTime.ToString());
-		yield return new WaitForSeconds (chaseTime);
-		setRegime = "scatter";
-		wave = (wave == wavesCount ? wave : wave + 1);
-		//Debug.Log ("WAVE " + wave.ToString());
-	}
-
 	private IEnumerator frightendRegime() {
-		string temp = (setRegime == "" ? "scatter" : setRegime.Substring(5));
-		setRegime = "stop_frightend";
+		string temp = setRegime;
+		t_timer = timer;
+		setRegime = "frightend";
 		FrightendRegime ();
-		//Debug.Log ("FRIGHTENDTIME: " + frightendTime.ToString());
+		Debug.Log(timer.ToString());
 		yield return new WaitForSeconds (frightendTime);
-		setRegime = temp;
+		setRegime = (temp == "scatter" ? "chase" : "scatter");
+		timer = (setRegime == "scatter" ? chaseTime : scatterTime);
 	}
 
 	private void firstLevel() {
 		//if (pacmanLives == 0) {
 			level = 1;
-			//pacmanLives = 3;
+		//	pacmanLives = 3;
 			Restart();
 		/*} else {
 			pacmanLives--;
