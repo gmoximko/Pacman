@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 	private float scatterTime;
@@ -10,7 +11,9 @@ public class GameManager : MonoBehaviour {
 	private float t_timer;
 	private string setRegime;
 	private int wave;
-	private Text text;
+	private Text[] texts;
+	private Text betaInfo;
+	private Image[] images;
 	private int pacmanLives;
 	private const int wavesCount = 4;
 
@@ -38,7 +41,8 @@ public class GameManager : MonoBehaviour {
 		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
 		pacmanLives = 2;
-		text = FindObjectOfType<Text> ();
+		texts = FindObjectsOfType<Text> ();
+		images = FindObjectsOfType<Image> ();
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -47,7 +51,6 @@ public class GameManager : MonoBehaviour {
 	private void callFrightend() {
 		StartCoroutine (frightendRegime());
 		textManager();
-
 	}
 
 	private void Restart() {
@@ -62,7 +65,8 @@ public class GameManager : MonoBehaviour {
 		wave = 0;
 		timer = chaseTime;
 		setTimeFrightend (level, out frightendTime);
-		text = FindObjectOfType<Text> ();
+		texts = FindObjectsOfType<Text> ();
+		images = FindObjectsOfType<Image> ();
 		textManager ();
 	}
 
@@ -111,6 +115,7 @@ public class GameManager : MonoBehaviour {
 				temp.SendMessage("onGhostEaten");
 			}
 			pacmanLives--;
+			images[pacmanLives].enabled = false;
 		}
 	}
 
@@ -209,11 +214,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void textManager() {
-		text.text = "Level: " + level.ToString ();
-		text.text += "\nWave: " + wave.ToString ();
-		text.text += "\nRegime: " + setRegime;
-		text.text += "\nChase time: " + chaseTime.ToString ();
-		text.text += "\nScatter time: " + scatterTime.ToString ();
-		text.text += "\nFrightend time: " + frightendTime.ToString ();
+		if (betaInfo == null) {
+			betaInfo = (from temp in texts where temp.name == "Text" select temp).First();
+		}
+		betaInfo.text = "Level: " + level.ToString ();
+		betaInfo.text += "\nWave: " + wave.ToString ();
+		betaInfo.text += "\nRegime: " + setRegime;
+		betaInfo.text += "\nChase time: " + chaseTime.ToString ();
+		betaInfo.text += "\nScatter time: " + scatterTime.ToString ();
+		betaInfo.text += "\nFrightend time: " + frightendTime.ToString ();
 	}
 }
