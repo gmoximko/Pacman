@@ -14,6 +14,8 @@ public class PlayerController : Mover {
 	private GameObject[] ghosts;
 	private readonly Vector2 startPos = new Vector2(14.0f, 7.0f);
 
+	public AudioClip chomp;
+	public AudioClip intermission;
 	[HideInInspector]public Vector2 dir;
 
 	protected override void Start () {
@@ -34,6 +36,10 @@ public class PlayerController : Mover {
 
 		if (other.tag == "Food") {
 
+			if (!source.isPlaying) {
+				source.clip = chomp;
+				source.Play();
+			}
 			if (ghosts == null) {
 				ghosts = GameObject.FindGameObjectsWithTag("Ghost");
 			}
@@ -48,6 +54,11 @@ public class PlayerController : Mover {
 				findGhost("Otoboke(Clone)").SendMessage("ghostGoesOut");
 			}
 		} else if (other.tag == "Energizer") {
+			source.clip = intermission;
+
+			if (!source.isPlaying) {
+				source.Play();
+			}
 			GameManager.gameManager.SendMessage("callFrightend");
 		}
 		other.gameObject.SetActive(false);

@@ -12,6 +12,7 @@ public abstract class Mover : MonoBehaviour {
 	protected bool frightend;
 	protected float speed;
 	protected Coroutine moving;
+	protected AudioSource source;
 
 	public const float speedValue = 10.0f;
 	public LayerMask mask;
@@ -23,6 +24,7 @@ public abstract class Mover : MonoBehaviour {
 		canMove = true;
 		frightend = false;
 		speed = setSpeed (GameManager.gameManager.level);
+		source = GetComponent<AudioSource> ();
 	}
 
 	protected bool move(int x, int y) {

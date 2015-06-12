@@ -20,6 +20,9 @@ public abstract class Ghost : Mover {
 	protected Vector2 target;
 	protected Vector2 scatterPoint;
 
+	public AudioClip pacmanDeath;
+	public AudioClip ghostDeath;
+
 	protected override void Start() {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
@@ -43,11 +46,21 @@ public abstract class Ghost : Mover {
 
 		if (other.tag == "Player" && !frightend) {
 			GameManager.gameManager.SendMessage ("firstLevel");
+			source.clip = pacmanDeath;
+
+			if (!source.isPlaying) {
+				source.Play();
+			}
 		} else if (other.tag == "Player" && frightend) {
 			coll.enabled = false;
 			gameObject.SetActive(true);
 			ghostGoesOut();
 			coll.enabled = true;
+			source.clip = ghostDeath;
+			
+			if (!source.isPlaying) {
+				source.Play();
+			}
 		}
 	}
 
