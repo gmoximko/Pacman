@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
 	private float timer;
 	private float t_timer;
 	private string setRegime;
-	private Coroutine regimes;
 	private int wave;
 	private Text text;
 	private int pacmanLives;
@@ -46,8 +45,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void callFrightend() {
-		//StopCoroutine (regimes);
-		regimes = StartCoroutine (frightendRegime());
+		StartCoroutine (frightendRegime());
 		textManager();
 
 	}
