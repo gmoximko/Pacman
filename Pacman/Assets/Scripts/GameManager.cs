@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
 
 	private void callFrightend() {
 		StartCoroutine (frightendRegime());
-		textManager();
+		//textManager();
 	}
 
 	private void Restart() {
@@ -67,7 +67,8 @@ public class GameManager : MonoBehaviour {
 		setTimeFrightend (level, out frightendTime);
 		texts = FindObjectsOfType<Text> ();
 		images = FindObjectsOfType<Image> ();
-		textManager ();
+		imagesManager ();
+		//textManager ();
 	}
 
 	private void Update() {
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour {
 	
 		if (setRegime == "scatter" && timer >= chaseTime) {
 			ScatterRegime();
-			textManager();
+			//textManager();
 			timer = t_timer;//t_timer принимает значение только в режиме страха, чтобы узнать сколько времени длился
 			t_timer = 0.0f; //предыдущий режим, после режима страха снова попадём в прежний режим и тот отыграет t_timer
 			setRegime = "chase";
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour {
 			setTimeForRegimes(wave, level, out scatterTime, out chaseTime);
 		} else if (setRegime == "chase" && timer >= scatterTime) {
 			ChaseRegime();
-			textManager();
+			//textManager();
 			timer = t_timer;
 			t_timer = 0.0f;
 			setRegime = "scatter";
@@ -223,5 +224,13 @@ public class GameManager : MonoBehaviour {
 		betaInfo.text += "\nChase time: " + chaseTime.ToString ();
 		betaInfo.text += "\nScatter time: " + scatterTime.ToString ();
 		betaInfo.text += "\nFrightend time: " + frightendTime.ToString ();
+	}
+
+	private void imagesManager() {
+		if (images.Length > pacmanLives) {
+			for (int i = images.Length - 1; i >= pacmanLives; i--) {
+				images[i].enabled = false;
+			}
+		}
 	}
 }
