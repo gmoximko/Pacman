@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 		t_timer = 0.0f;
 		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
-		pacmanLives = 3;
+		pacmanLives = 2;
 		text = FindObjectOfType<Text> ();
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
 	private void firstLevel() {
 		if (pacmanLives == 0) {
 			level = 1;
-			pacmanLives = 3;
+			pacmanLives = 2;
 			Restart();
 		} else {
 			GameObject.FindGameObjectWithTag("Player").SendMessage("pacmanHasLives");
