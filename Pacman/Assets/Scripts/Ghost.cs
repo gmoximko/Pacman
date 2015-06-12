@@ -41,7 +41,7 @@ public abstract class Ghost : Mover {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Tunnel") {
-			Debug.Log("I'M HERE");
+			speed = tunnelSpeed(GameManager.gameManager.level);
 		}
 
 		if (other.tag == "Player" && !frightend) {
@@ -53,7 +53,6 @@ public abstract class Ghost : Mover {
 			}
 		} else if (other.tag == "Player" && frightend) {
 			coll.enabled = false;
-			gameObject.SetActive(true);
 			ghostGoesOut();
 			coll.enabled = true;
 			source.clip = ghostDeath;
@@ -61,6 +60,12 @@ public abstract class Ghost : Mover {
 			if (!source.isPlaying) {
 				source.Play();
 			}
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other) {
+		if (other.tag == "Tunnel" && !frightend) {
+			speed = setSpeed(GameManager.gameManager.level);
 		}
 	}
 

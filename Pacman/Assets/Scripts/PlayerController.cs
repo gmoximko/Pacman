@@ -53,6 +53,7 @@ public class PlayerController : Mover {
 			} else if (foodEaten == (foodForOtoboke < 1 ? 1 : foodForOtoboke)) {
 				findGhost("Otoboke(Clone)").SendMessage("ghostGoesOut");
 			}
+			other.gameObject.SetActive(false);
 		} else if (other.tag == "Energizer") {
 			source.clip = intermission;
 
@@ -60,8 +61,8 @@ public class PlayerController : Mover {
 				source.Play();
 			}
 			GameManager.gameManager.SendMessage("callFrightend");
+			other.gameObject.SetActive(false);
 		}
-		other.gameObject.SetActive(false);
 	}
 
 	private void Update () {
