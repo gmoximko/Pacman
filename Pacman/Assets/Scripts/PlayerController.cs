@@ -26,8 +26,8 @@ public class PlayerController : Mover {
 		dir = new Vector2(x, y);
 		ghosts = null;
 		foodForPinky = 1;
-		foodForAosuke  = (int)(GameManager.foodCount * 0.15) - GameManager.gameManager.level;
-		foodForOtoboke = (int)(GameManager.foodCount * 0.25) - GameManager.gameManager.level;
+		foodForAosuke  = (int)(GameManager.foodCount * 0.2) - GameManager.gameManager.level;
+		foodForOtoboke = (int)(GameManager.foodCount * 0.4) - GameManager.gameManager.level;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
