@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour {
 			timer = t_timer;//t_timer принимает значение только в режиме страха, чтобы узнать сколько времени длился
 			t_timer = 0.0f; //предыдущий режим, после режима страха снова попадём в прежний режим и тот отыграет t_timer
 			setRegime = "chase";
-			Debug.Log(timer.ToString());
+
 			if (timer == 0.0f) { //предполагается, что зашли сюда не из режима страха, тогда наступает следующая волна
 				wave = (wave == wavesCount ? wave : wave + 1);
 			}
@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour {
 			timer = t_timer;
 			t_timer = 0.0f;
 			setRegime = "scatter";
-			Debug.Log(timer.ToString());
 		}
 	}
 
@@ -95,7 +94,6 @@ public class GameManager : MonoBehaviour {
 		t_timer = timer;
 		setRegime = "frightend";
 		FrightendRegime ();
-		Debug.Log(timer.ToString());
 		yield return new WaitForSeconds (frightendTime);
 		setRegime = (temp == "scatter" ? "chase" : "scatter");
 		timer = (setRegime == "scatter" ? chaseTime : scatterTime);
