@@ -8,6 +8,7 @@ public class Aosuke : Ghost {
 	protected override void Start() {
 		base.Start ();
 		scatterPoint = new Vector2 (28.0f, -1.0f);
+		foodNeedToGo = (int)(GameManager.foodCount * 0.2) - GameManager.gameManager.level;
 	}
 
 	protected override void Chase() {

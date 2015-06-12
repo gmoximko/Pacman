@@ -13,6 +13,7 @@ public abstract class Mover : MonoBehaviour {
 	protected float speed;
 	protected Coroutine moving;
 	protected AudioSource source;
+	protected Vector2 startPos;
 
 	public const float speedValue = 10.0f;
 	public LayerMask mask;
@@ -25,6 +26,7 @@ public abstract class Mover : MonoBehaviour {
 		frightend = false;
 		speed = setSpeed (GameManager.gameManager.level);
 		source = GetComponent<AudioSource> ();
+		startPos = (Vector2)transform.position;
 	}
 
 	protected bool move(int x, int y) {

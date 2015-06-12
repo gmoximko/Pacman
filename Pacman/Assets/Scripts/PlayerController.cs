@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Linq;
 
 public class PlayerController : Mover {
 	private int vertical;
@@ -11,9 +10,11 @@ public class PlayerController : Mover {
 	private int foodForAosuke;
 	private int foodForOtoboke;
 	private int foodForPinky;
+	private bool playerEaten;
 	private GameObject[] ghosts;
-	private readonly Vector2 startPos = new Vector2(14.0f, 7.0f);
 
+	public delegate void VoidFunc();
+	public event VoidFunc FoodEaten;
 	public AudioClip chomp;
 	public AudioClip intermission;
 	[HideInInspector]public Vector2 dir;
@@ -27,9 +28,7 @@ public class PlayerController : Mover {
 		foodEaten = 0;
 		dir = new Vector2(x, y);
 		ghosts = null;
-		foodForPinky = 1;
-		foodForAosuke  = (int)(GameManager.foodCount * 0.2) - GameManager.gameManager.level;
-		foodForOtoboke = (int)(GameManager.foodCount * 0.4) - GameManager.gameManager.level;
+		playerEaten = false;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -44,15 +43,10 @@ public class PlayerController : Mover {
 				ghosts = GameObject.FindGameObjectsWithTag("Ghost");
 			}
 			foodEaten++;
+			FoodEaten();
 			if (GameManager.foodCount == foodEaten) {
 				GameManager.gameManager.SendMessage("nextLevel");
-			} else if (foodEaten == foodForPinky) {
-				findGhost("Pinky(Clone)").SendMessage("ghostGoesOut");
-			} else if (foodEaten == (foodForAosuke < 1 ? 1 : foodForAosuke)) {
-				findGhost("Aosuke(Clone)").SendMessage("ghostGoesOut");
-			} else if (foodEaten == (foodForOtoboke < 1 ? 1 : foodForOtoboke)) {
-				findGhost("Otoboke(Clone)").SendMessage("ghostGoesOut");
-			}
+			} 
 			other.gameObject.SetActive(false);
 		} else if (other.tag == "Energizer") {
 			source.clip = intermission;
@@ -66,6 +60,9 @@ public class PlayerController : Mover {
 	}
 
 	private void Update () {
+		if (playerEaten && (Vector2)transform.position == startPos) {
+			coll.enabled = true;
+		}
 
 		if ((int)Input.GetAxisRaw ("Vertical") != 0) {
 			vertical = (int)Input.GetAxisRaw("Vertical");
@@ -101,13 +98,13 @@ public class PlayerController : Mover {
 		return speedValue;
 	}
 
-	private GameObject findGhost(string name) {
-		return (from temp in ghosts
-		        where temp.name == name
-		        select temp).First();
-	}
-
 	private void pacmanHasLives() {
-		smoothMove (startPos);
+		coll.enabled = false;
+		if (moving != null) {
+			StopCoroutine(moving);
+		}
+		StartCoroutine(smoothMove (startPos));
+		playerEaten = true;
+		//coll.enabled = true;
 	}
 }

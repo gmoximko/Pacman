@@ -4,6 +4,8 @@ using System.Collections;
 public abstract class Ghost : Mover {
 	private delegate void Regime ();
 	private Regime currentRegime;
+	private bool isOutdoor;
+	private int foodCount;
 	private Vector2 prevPos;
 	private Vector2 currentPos;
 	private readonly Vector2 outDoorPos = new Vector2 (14.0f, 19.0f);
@@ -19,6 +21,7 @@ public abstract class Ghost : Mover {
 	protected GameObject pacman;
 	protected Vector2 target;
 	protected Vector2 scatterPoint;
+	protected int foodNeedToGo;
 
 	public AudioClip pacmanDeath;
 	public AudioClip ghostDeath;
@@ -27,12 +30,20 @@ public abstract class Ghost : Mover {
 		base.Start ();
 		pacman = GameObject.FindGameObjectWithTag("Player");
 		prevPos = new Vector2 (13.0f, 19.0f); //идти вправо в самом начале запрещено
+		isOutdoor = false;
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().FoodEaten += onFoodEaten;
 		GameManager.gameManager.ScatterRegime 	+= setScatterRegime;
 		GameManager.gameManager.ChaseRegime 	+= setChaseRegime;
 		GameManager.gameManager.FrightendRegime += setFrightendRegime;
 	}
-	
+
 	private void Update() {
+		if (isOutdoor && (Vector2)transform.position == startPos) {
+			foodCount = 0;//счётчик еды обнуляется в случае если призрака съели и когда тот оказадся в стартовой позиции
+			isOutdoor = false;
+			coll.enabled = true;
+		}
+
 		if (canMove && currentRegime != null) {
 			currentRegime();
 			searchPath ((int)target.x, (int)target.y);
@@ -52,11 +63,9 @@ public abstract class Ghost : Mover {
 				source.Play();
 			}
 		} else if (other.tag == "Player" && frightend) {
-			coll.enabled = false;
-			ghostGoesOut();
-			coll.enabled = true;
+			onGhostEaten();
 			source.clip = ghostDeath;
-			
+
 			if (!source.isPlaying) {
 				source.Play();
 			}
@@ -70,6 +79,7 @@ public abstract class Ghost : Mover {
 	}
 
 	private void OnDestroy() {
+		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().FoodEaten -= onFoodEated;
 		GameManager.gameManager.ScatterRegime 	-= setScatterRegime;
 		GameManager.gameManager.ChaseRegime 	-= setChaseRegime;
 		GameManager.gameManager.FrightendRegime -= setFrightendRegime;
@@ -126,6 +136,25 @@ public abstract class Ghost : Mover {
 		StartCoroutine (smoothMove (outDoorPos));
 		currentPos = outDoorPos;
 		prevPos = new Vector2 (15.0f, 19.0f);
+		isOutdoor = true;
+	}
+
+	private void onFoodEaten() {
+		foodCount++;
+
+		if (foodCount == foodNeedToGo) {
+			ghostGoesOut();
+		}
+	}
+
+	private void onGhostEaten() {
+		coll.enabled = false;
+		
+		if (moving != null) {
+			StopCoroutine(moving);
+		}
+		StartCoroutine (smoothMove (startPos));
+		//coll.enabled = true;
 	}
 
 	private void searchPath(int x, int y) {

@@ -100,19 +100,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void firstLevel() {
-		//if (pacmanLives == 0) {
+		if (pacmanLives == 0) {
 			level = 1;
-		//	pacmanLives = 3;
+			pacmanLives = 3;
 			Restart();
-		/*} else {
-			pacmanLives--;
+		} else {
 			GameObject.FindGameObjectWithTag("Player").SendMessage("pacmanHasLives");
 
 			foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Ghost")) {
-				temp.SetActive(false);
+				temp.SendMessage("onGhostEaten");
 			}
-			boardManager.SendMessage("ghostsGo");
-		}*/
+			pacmanLives--;
+		}
 	}
 
 	private void nextLevel() {

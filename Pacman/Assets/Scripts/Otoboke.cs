@@ -6,6 +6,7 @@ public class Otoboke : Ghost {
 	protected override void Start() {
 		base.Start ();
 		scatterPoint = new Vector2 (0.0f, -1.0f);
+		foodNeedToGo = (int)(GameManager.foodCount * 0.4) - GameManager.gameManager.level;
 	}
 
 	protected override void Chase() {
