@@ -73,7 +73,12 @@ public class GameManager : MonoBehaviour {
 
 	private void Update() {
 		timer += Time.deltaTime;
-	
+
+		if (Input.GetButton ("Cancel")) {
+			pacmanLives = 0;
+			firstLevel();
+		}
+
 		if (setRegime == "scatter" && timer >= chaseTime) {
 			ScatterRegime();
 			//textManager();
@@ -227,6 +232,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void imagesManager() {
+		(from temp in texts where temp.name == "Level" select temp).First ().text = "LEVEL: " + level.ToString ();
+
 		if (images.Length > pacmanLives) {
 			for (int i = images.Length - 1; i >= pacmanLives; i--) {
 				images[i].enabled = false;
