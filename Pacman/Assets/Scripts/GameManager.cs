@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour {
 	private int wave;
 	private Text[] texts;
 	private Text betaInfo;
+	private Text pause;
 	private Image[] images;
 	private int pacmanLives;
+	private bool stopTimer;
 	private const int wavesCount = 4;
 
 	public int level { get; private set; }
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager gameManager = null;
 	public BoardManager boardManager;
 	public delegate void VoidFunc ();
+	public event VoidFunc GamePaused;
 	public event VoidFunc GameStart;
 	public event VoidFunc ScatterRegime;
 	public event VoidFunc ChaseRegime;
@@ -41,8 +44,11 @@ public class GameManager : MonoBehaviour {
 		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
 		pacmanLives = 2;
+		stopTimer = false;
 		texts = FindObjectsOfType<Text> ();
 		images = FindObjectsOfType<Image> ();
+		pause = (from temp in texts where temp.name == "Pause" select temp).First ();
+		pause.enabled = false;
 		GameManager.gameManager.GameStart += boardManager.setLevel;
 		DontDestroyOnLoad (gameObject);
 		GameStart ();
@@ -67,16 +73,25 @@ public class GameManager : MonoBehaviour {
 		setTimeFrightend (level, out frightendTime);
 		texts = FindObjectsOfType<Text> ();
 		images = FindObjectsOfType<Image> ();
+		pause = (from temp in texts where temp.name == "Pause" select temp).First ();
 		imagesManager ();
 		//textManager ();
 	}
 
 	private void Update() {
-		timer += Time.deltaTime;
+		if (!stopTimer) {
+			timer += Time.deltaTime;
+		}
 
-		if (Input.GetButton ("Cancel")) {
+		if (Input.GetButtonDown ("Cancel")) {
 			pacmanLives = 0;
 			firstLevel();
+		}
+
+		if (Input.GetButtonDown ("Jump") && setRegime != "frightend") {
+			stopTimer = !stopTimer;
+			pause.enabled = !pause.enabled;
+			GamePaused();
 		}
 
 		if (setRegime == "scatter" && timer >= chaseTime) {
@@ -233,6 +248,7 @@ public class GameManager : MonoBehaviour {
 
 	private void imagesManager() {
 		(from temp in texts where temp.name == "Level" select temp).First ().text = "LEVEL: " + level.ToString ();
+		pause.enabled = false;
 
 		if (images.Length > pacmanLives) {
 			for (int i = images.Length - 1; i >= pacmanLives; i--) {

@@ -78,7 +78,7 @@ public class PlayerController : Mover {
 			horizontal = 0;
 		}
 
-		if ((vertical != 0 || horizontal != 0)) {
+		if ((vertical != 0 || horizontal != 0) && !isGamePaused) {
 			if (!move (horizontal, vertical)) {
 				move(x, y); //don't change direction if path is locked 
 			} else {

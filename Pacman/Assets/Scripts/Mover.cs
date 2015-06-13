@@ -5,16 +5,17 @@ public abstract class Mover : MonoBehaviour {
 	private Rigidbody2D body;
 	private readonly Vector2 rightTunnel = new Vector2 (27.0f, 16.0f);
 	private readonly Vector2 leftTunnel  = new Vector2 ( 0.0f, 16.0f);
-
+	
 	protected Collider2D coll;
 	protected Animator anim;
+	protected bool isGamePaused;
 	protected bool canMove;
 	protected bool frightend;
 	protected float speed;
 	protected Coroutine moving;
 	protected AudioSource source;
 	protected Vector2 startPos;
-
+	
 	public const float speedValue = 10.0f;
 	public LayerMask mask;
 
@@ -22,11 +23,13 @@ public abstract class Mover : MonoBehaviour {
 		body = GetComponent<Rigidbody2D> ();
 		coll = GetComponent<Collider2D> ();
 		anim = GetComponent<Animator> ();
+		isGamePaused = false;
 		canMove = true;
 		frightend = false;
 		speed = setSpeed (GameManager.gameManager.level);
 		source = GetComponent<AudioSource> ();
 		startPos = (Vector2)transform.position;
+		GameManager.gameManager.GamePaused += onGamePaused;
 	}
 
 	protected bool move(int x, int y) {
@@ -66,7 +69,7 @@ public abstract class Mover : MonoBehaviour {
 		} else if (body.position.x >rightTunnel.x) {
 			body.MovePosition(leftTunnel);
 		}
-		canMove = true;
+		canMove = (isGamePaused ? false : true);
 	}
 
 	private void setAnimation(Vector2 end) {
@@ -85,6 +88,17 @@ public abstract class Mover : MonoBehaviour {
 		} else if (startPos.y - end.y < 0.0f) {
 			anim.SetTrigger ("Up");
 		}
+	}
+
+	private void OnDestroy() {
+		GameManager.gameManager.GamePaused -= onGamePaused;
+	}
+
+	private void onGamePaused() {
+		if (isGamePaused) {
+			canMove = true;
+		}
+		isGamePaused = !isGamePaused;
 	}
 
 	protected abstract float setSpeed(int level);
