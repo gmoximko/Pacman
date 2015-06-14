@@ -83,9 +83,10 @@ public abstract class Ghost : Mover {
 		GameManager.gameManager.ScatterRegime 	-= setScatterRegime;
 		GameManager.gameManager.ChaseRegime 	-= setChaseRegime;
 		GameManager.gameManager.FrightendRegime -= setFrightendRegime;
+		GameManager.gameManager.GamePaused 		-= onGamePaused;
 	}
 
-	public void setScatterRegime() {
+	private void setScatterRegime() {
 		if (!frightend) {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
 		} else {
@@ -95,7 +96,7 @@ public abstract class Ghost : Mover {
 		currentRegime = new Regime (Scatter);
 	}
 	
-	public void setChaseRegime() {
+	private void setChaseRegime() {
 		if (!frightend) {
 			prevPos += (((Vector2)transform.position - prevPos).normalized * 2);	
 		} else {
@@ -105,7 +106,7 @@ public abstract class Ghost : Mover {
 		currentRegime = new Regime (Chase);
 	}
 	
-	public void setFrightendRegime() {
+	private void setFrightendRegime() {
 		prevPos += (((Vector2)transform.position - prevPos).normalized * 2);
 		currentRegime = new Regime (Frightend);
 		anim.SetTrigger ("Frightend");

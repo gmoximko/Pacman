@@ -4,24 +4,24 @@ using System.Collections;
 using System.Linq;
 
 public class GameManager : MonoBehaviour {
+	private string setRegime;
 	private float scatterTime;
 	private float chaseTime;
 	private float frightendTime;
 	private float timer;
 	private float t_timer;
-	private string setRegime;
 	private int wave;
+	private int pacmanLives;
+	private bool stopTimer;
+	private const int wavesCount = 4;
 	private Text[] texts;
 	private Text betaInfo;
 	private Text pause;
 	private Image[] images;
-	private int pacmanLives;
-	private bool stopTimer;
-	private const int wavesCount = 4;
 
+	public static GameManager gameManager = null;
 	public int level { get; private set; }
 	public const int foodCount = 240;
-	public static GameManager gameManager = null;
 	public BoardManager boardManager;
 	public delegate void VoidFunc ();
 	public event VoidFunc GamePaused;

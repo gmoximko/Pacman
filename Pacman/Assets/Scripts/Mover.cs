@@ -90,11 +90,7 @@ public abstract class Mover : MonoBehaviour {
 		}
 	}
 
-	private void OnDestroy() {
-		GameManager.gameManager.GamePaused -= onGamePaused;
-	}
-
-	private void onGamePaused() {
+	protected void onGamePaused() {
 		if (isGamePaused) {
 			canMove = true;
 		}

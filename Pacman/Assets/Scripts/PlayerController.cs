@@ -89,6 +89,10 @@ public class PlayerController : Mover {
 		}
 	}
 
+	private void OnDestroy() {
+		GameManager.gameManager.GamePaused -= onGamePaused;
+	}
+
 	protected override float setSpeed(int level) {
 		if (level == 1) {
 			return speedValue * 0.8f;
