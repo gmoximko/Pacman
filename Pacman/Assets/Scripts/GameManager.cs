@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour {
 	private float t_timer;
 	private int wave;
 	private int pacmanLives;
-	private bool stopTimer;
 	private const int wavesCount = 4;
 	private Text[] texts;
 	private Text betaInfo;
@@ -21,6 +20,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager gameManager = null;
 	public int level { get; private set; }
+	public bool isGamePaused { get; private set; }
 	public const int foodCount = 240;
 	public BoardManager boardManager;
 	public delegate void VoidFunc ();
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
 		setTimeFrightend (level, out frightendTime);
 		setRegime = "scatter";
 		pacmanLives = 2;
-		stopTimer = false;
+		isGamePaused = false;
 		texts = FindObjectsOfType<Text> ();
 		images = FindObjectsOfType<Image> ();
 		pause = (from temp in texts where temp.name == "Pause" select temp).First ();
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (!stopTimer) {
+		if (!isGamePaused) {
 			timer += Time.deltaTime;
 		}
 
@@ -89,9 +89,9 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if (Input.GetButtonDown ("Jump") && setRegime != "frightend") {
-			stopTimer = !stopTimer;
-			pause.enabled = !pause.enabled;
 			GamePaused();
+			pause.enabled = !pause.enabled;
+			isGamePaused = !isGamePaused;
 		}
 
 		if (setRegime == "scatter" && timer >= chaseTime) {

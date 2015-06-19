@@ -8,7 +8,6 @@ public abstract class Mover : MonoBehaviour {
 	
 	protected Collider2D coll;
 	protected Animator anim;
-	protected bool isGamePaused;
 	protected bool canMove;
 	protected bool frightend;
 	protected float speed;
@@ -23,7 +22,6 @@ public abstract class Mover : MonoBehaviour {
 		body = GetComponent<Rigidbody2D> ();
 		coll = GetComponent<Collider2D> ();
 		anim = GetComponent<Animator> ();
-		isGamePaused = false;
 		canMove = true;
 		frightend = false;
 		speed = setSpeed (GameManager.gameManager.level);
@@ -69,7 +67,7 @@ public abstract class Mover : MonoBehaviour {
 		} else if (body.position.x >rightTunnel.x) {
 			body.MovePosition(leftTunnel);
 		}
-		canMove = (isGamePaused ? false : true);
+		canMove = (GameManager.gameManager.isGamePaused ? false : true);
 	}
 
 	private void setAnimation(Vector2 end) {
@@ -91,10 +89,9 @@ public abstract class Mover : MonoBehaviour {
 	}
 
 	protected void onGamePaused() {
-		if (isGamePaused) {
+		if (GameManager.gameManager.isGamePaused) {
 			canMove = true;
 		}
-		isGamePaused = !isGamePaused;
 	}
 
 	protected abstract float setSpeed(int level);
